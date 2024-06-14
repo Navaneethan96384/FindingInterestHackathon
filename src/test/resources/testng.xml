@@ -2,7 +2,7 @@
 <suite name="TestSuite" parallel="tests">
 	<test name="Test">
 		<classes>
-			<class name="selenium.EmiCalculatorTest" />
+			<class name="testCases.TestCase1" />
 		</classes>
 	</test>
 </suite>
