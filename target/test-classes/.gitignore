@@ -1,5 +1,8 @@
-/Utils/
-/pageObjects/
+/stepDefinitions/
+/runners/
+/testNG/
+/testng/
+/cucumber/
 /seleniumUtils/
-/testCases/
 /utils/
+/pageObjects/

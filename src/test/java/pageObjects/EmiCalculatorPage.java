@@ -76,7 +76,7 @@ public class EmiCalculatorPage {
 		return true;
 	}
 
-	public Boolean setHomeLoanAmount(int amount) {
+	public Boolean setCarLoanAmount(int amount) {
 		if (!elementUtil.scrollToAndVerifyElement(loanAmountInputElement, scrollableElement))
 			return false;
 
@@ -135,8 +135,8 @@ public class EmiCalculatorPage {
 			return null;
 
 		float annualInterestRate = Float.parseFloat(loanInterestInputElement.getAttribute("value"));
-		int principalAmount = Integer.parseInt(loanAmountInputElement.getAttribute("value"));
-		int emiAmount = Integer.parseInt(emiAmountElement.getText());
+		int principalAmount = Integer.parseInt(loanAmountInputElement.getAttribute("value").replaceAll(",", ""));
+		int emiAmount = Integer.parseInt(emiAmountElement.getText().replaceAll(",", ""));
 
 		int firstMonthInterestAmount = (int) ((annualInterestRate / 12f / 100f) * principalAmount);
 		int firstMonthPrincipalAmount = emiAmount - firstMonthInterestAmount;

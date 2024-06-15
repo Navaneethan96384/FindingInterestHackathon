@@ -43,7 +43,7 @@ public class ScrollUntillElementFound implements ExpectedCondition<Boolean> {
 			try {
 				// until method throws an exception when the duration timeout is exceeded.
 				wait.until(ExpectedConditions.visibilityOf(element));
-				jExecutor.executeScript("arguments[0].scrollIntoView({ block: 'center', inline: 'center' });", element);
+				jExecutor.executeScript("arguments[0].scrollIntoView({ behavior: 'auto', block: 'center', inline: 'center' });", element);
 				return true;
 			} catch (Exception ignored) {
 			}

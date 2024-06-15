@@ -125,91 +125,19 @@ public class LoanCalculatorPage {
 	}
 
 	public Boolean setLoanAmountOnInput(int amount) {
-		if (!elementUtil.scrollToAndVerifyElement(loanAmountInputElement, scrollableElement))
-			return false;
-
-		elementUtil.highlightElement(loanAmountInputElement);
-		loanAmountInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(amount), Keys.ENTER);
-		ElementUtil.takeScreenshot(driver, "setLoanAmountOnInput");
-		elementUtil.undoHighlightElement(loanAmountInputElement);
-		return true;
+		return setValueOnInput(loanAmountInputElement, amount, "setLoanAmountOnInput");
 	}
 
 	public Float[] getLoanAmountFromSlider() {
-		if (!elementUtil.scrollToAndVerifyElement(loanAmountSliderElement, scrollableElement))
-			return null;
-		if (!elementUtil.verifyElement(loanAmountStepElements.get(0)))
-			return null;
-
-		String sliderLeftBoundString, sliderRightBoundString;
-		WebElement sliderLeftBoundElement = loanAmountStepElements.get(0), sliderRightBoundElement = loanAmountStepElements.get(loanAmountStepElements.size() - 1);
-		
-		elementUtil.highlightElement(sliderLeftBoundElement);
-		sliderLeftBoundString = sliderLeftBoundElement.getText().trim();
-		elementUtil.undoHighlightElement(sliderLeftBoundElement);
-		elementUtil.highlightElement(sliderRightBoundElement);
-		sliderRightBoundString = sliderRightBoundElement.getText().trim();
-		elementUtil.undoHighlightElement(sliderRightBoundElement);
-		
-
-		Float[] sliderBoundsFloats = { Float.parseFloat(sliderLeftBoundString.split("L")[0]),
-				Float.parseFloat(sliderRightBoundString.split("L")[0]) };
-		if (sliderRightBoundString.contains("L")) {
-			sliderBoundsFloats[0] *= 100000;
-			sliderBoundsFloats[1] *= 100000;
-		}
-
-		elementUtil.highlightElement(loanAmountSliderElement);
-		String slidePercentageString = loanAmountSliderElement.getAttribute("style");
-		ElementUtil.takeScreenshot(driver, "getLoanAmountFromSlider");
-		elementUtil.undoHighlightElement(loanAmountSliderElement);
-		Float slidePercentage = Float.parseFloat(slidePercentageString.split("[: %]+")[1]);
-
-		return new Float[] { sliderBoundsFloats[0], sliderBoundsFloats[1], slidePercentage };
+		return getSliderDetails(loanAmountSliderElement, loanAmountStepElements, "getLoanAmountFromSlider");
 	}
 
 	public Boolean setLoanInterestOnInput(float rate) {
-		if (!elementUtil.scrollToAndVerifyElement(loanInterestInputElement, scrollableElement))
-			return false;
-
-		elementUtil.highlightElement(loanInterestInputElement);
-		loanInterestInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(rate), Keys.ENTER);
-		ElementUtil.takeScreenshot(driver, "setLoanInterestOnInput");
-		elementUtil.undoHighlightElement(loanInterestInputElement);
-		return true;
+		return setValueOnInput(loanInterestInputElement, rate, "setLoanInterestOnInput");
 	}
 
 	public Float[] getLoanInterestFromSlider() {
-		if (!elementUtil.scrollToAndVerifyElement(loanInterestSliderElement, scrollableElement))
-			return null;
-		if (!elementUtil.verifyElement(loanInterestStepElements.get(0)))
-			return null;
-
-		String sliderLeftBoundString, sliderRightBoundString;
-		WebElement sliderLeftBoundElement = loanInterestStepElements.get(0), sliderRightBoundElement = loanInterestStepElements.get(loanInterestStepElements.size() - 1);
-		
-		elementUtil.highlightElement(sliderLeftBoundElement);
-		sliderLeftBoundString = sliderLeftBoundElement.getText().trim();
-		elementUtil.undoHighlightElement(sliderLeftBoundElement);
-		elementUtil.highlightElement(sliderRightBoundElement);
-		sliderRightBoundString = sliderRightBoundElement.getText().trim();
-		elementUtil.undoHighlightElement(sliderRightBoundElement);
-		
-
-		Float[] sliderBoundsFloats = { Float.parseFloat(sliderLeftBoundString.split("L")[0]),
-				Float.parseFloat(sliderRightBoundString.split("L")[0]) };
-		if (sliderRightBoundString.contains("L")) {
-			sliderBoundsFloats[0] *= 100000;
-			sliderBoundsFloats[1] *= 100000;
-		}
-
-		elementUtil.highlightElement(loanInterestSliderElement);
-		String slidePercentageString = loanInterestSliderElement.getAttribute("style");
-		ElementUtil.takeScreenshot(driver, "getLoanInterestFromSlider");
-		elementUtil.undoHighlightElement(loanInterestSliderElement);
-		Float slidePercentage = Float.parseFloat(slidePercentageString.split("[: %]+")[1]);
-
-		return new Float[] { sliderBoundsFloats[0], sliderBoundsFloats[1], slidePercentage };
+		return getSliderDetails(loanInterestSliderElement, loanInterestStepElements, "getLoanInterestFromSlider");
 	}
 
 	public Boolean setLoanTenureOnInput(int duration, TimePeriod timePeriod) {
@@ -232,11 +160,7 @@ public class LoanCalculatorPage {
 			elementUtil.undoHighlightElement(loanTenureYearToggleElement);
 		}
 
-		elementUtil.highlightElement(loanTenureInputElement);
-		loanTenureInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(duration), Keys.ENTER);
-		ElementUtil.takeScreenshot(driver, "setLoanTenure");
-		elementUtil.undoHighlightElement(loanTenureInputElement);
-		return true;
+		return setValueOnInput(loanTenureInputElement, duration, "setLoanTenureOnInput");
 	}
 
 	public Float[] getLoanTenureFromSlider(TimePeriod timePeriod) {
@@ -246,7 +170,7 @@ public class LoanCalculatorPage {
 			return null;
 		if (!elementUtil.verifyElement(loanTenureYearToggleElement))
 			return null;
-		
+
 		if (timePeriod == TimePeriod.MONTH) {
 			elementUtil.highlightElement(loanTenureMonthToggleElement);
 			ElementUtil.takeScreenshot(driver, "setLoanTenurePeriod");
@@ -258,110 +182,59 @@ public class LoanCalculatorPage {
 			loanTenureYearToggleElement.click();
 			elementUtil.undoHighlightElement(loanTenureYearToggleElement);
 		}
-		
-		if (!elementUtil.verifyElement(loanTenureSliderElement))
-			return null;
-		if (!elementUtil.verifyElement(loanTenureStepElements.get(0)))
-			return null;
 
-		String sliderLeftBoundString, sliderRightBoundString;
-		WebElement sliderLeftBoundElement = loanTenureStepElements.get(0), sliderRightBoundElement = loanTenureStepElements.get(loanTenureStepElements.size() - 1);
-		
-		elementUtil.highlightElement(sliderLeftBoundElement);
-		sliderLeftBoundString = sliderLeftBoundElement.getText().trim();
-		elementUtil.undoHighlightElement(sliderLeftBoundElement);
-		elementUtil.highlightElement(sliderRightBoundElement);
-		sliderRightBoundString = sliderRightBoundElement.getText().trim();
-		elementUtil.undoHighlightElement(sliderRightBoundElement);
-		
-
-		Float[] sliderBoundsFloats = { Float.parseFloat(sliderLeftBoundString.split("L")[0]),
-				Float.parseFloat(sliderRightBoundString.split("L")[0]) };
-		if (sliderRightBoundString.contains("L")) {
-			sliderBoundsFloats[0] *= 100000;
-			sliderBoundsFloats[1] *= 100000;
-		}
-
-		elementUtil.highlightElement(loanTenureSliderElement);
-		String slidePercentageString = loanTenureSliderElement.getAttribute("style");
-		ElementUtil.takeScreenshot(driver, "getLoanTenureFromSlider");
-		elementUtil.undoHighlightElement(loanTenureSliderElement);
-		Float slidePercentage = Float.parseFloat(slidePercentageString.split("[: %]+")[1]);
-
-		return new Float[] { sliderBoundsFloats[0], sliderBoundsFloats[1], slidePercentage };
+		return getSliderDetails(loanTenureSliderElement, loanTenureStepElements, "getLoanTenureFromSlider");
 	}
 
 	public Boolean setLoanFeesOnInput(int amount) {
 		if (!elementUtil.scrollToAndVerifyElement(loanFeesInputElement, scrollableElement))
 			return false;
 
-		elementUtil.highlightElement(loanFeesInputElement);
-		loanFeesInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(amount), Keys.ENTER);
-		ElementUtil.takeScreenshot(driver, "setLoanFeesOnInput");
-		elementUtil.undoHighlightElement(loanFeesInputElement);
-		return true;
+		return setValueOnInput(loanFeesInputElement, amount, "setLoanFeesOnInput");
 	}
 
 	public Float[] getLoanFeesFromSlider() {
-		if (!elementUtil.scrollToAndVerifyElement(loanFeesSliderElement, scrollableElement))
-			return null;
-		if (!elementUtil.verifyElement(loanInterestStepElements.get(0)))
-			return null;
-
-		String sliderLeftBoundString, sliderRightBoundString;
-		WebElement sliderLeftBoundElement = loanFeesStepElements.get(0), sliderRightBoundElement = loanFeesStepElements.get(loanFeesStepElements.size() - 1);
-		
-		elementUtil.highlightElement(sliderLeftBoundElement);
-		sliderLeftBoundString = sliderLeftBoundElement.getText().trim();
-		elementUtil.undoHighlightElement(sliderLeftBoundElement);
-		elementUtil.highlightElement(sliderRightBoundElement);
-		sliderRightBoundString = sliderRightBoundElement.getText().trim();
-		elementUtil.undoHighlightElement(sliderRightBoundElement);
-		
-
-		Float[] sliderBoundsFloats = { Float.parseFloat(sliderLeftBoundString.split("L")[0]),
-				Float.parseFloat(sliderRightBoundString.split("L")[0]) };
-		if (sliderRightBoundString.contains("L")) {
-			sliderBoundsFloats[0] *= 100000;
-			sliderBoundsFloats[1] *= 100000;
-		}
-
-		elementUtil.highlightElement(loanFeesSliderElement);
-		String slidePercentageString = loanFeesSliderElement.getAttribute("style");
-		ElementUtil.takeScreenshot(driver, "getLoanFeesFromSlider");
-		elementUtil.undoHighlightElement(loanFeesSliderElement);
-		Float slidePercentage = Float.parseFloat(slidePercentageString.split("[: %]+")[1]);
-
-		return new Float[] { sliderBoundsFloats[0], sliderBoundsFloats[1], slidePercentage };
+		return getSliderDetails(loanFeesSliderElement, loanFeesStepElements, "getLoanFeesFromSlider");
 	}
 
 	public Boolean setEmiOnInput(int amount) {
 		if (!elementUtil.scrollToAndVerifyElement(emiInputElement, scrollableElement))
 			return false;
 
-		elementUtil.highlightElement(emiInputElement);
-		emiInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(amount), Keys.ENTER);
-		ElementUtil.takeScreenshot(driver, "setEmiOnInput");
-		elementUtil.undoHighlightElement(emiInputElement);
-		return true;
+		return setValueOnInput(emiInputElement, amount, "setEmiOnInput");
 	}
 
 	public Float[] getEmiFromSlider() {
-		if (!elementUtil.scrollToAndVerifyElement(emiSliderElement, scrollableElement))
+		return getSliderDetails(emiSliderElement, emiStepElements, "getEmiFromSlider");
+	}
+
+	public Boolean setValueOnInput(WebElement inputElement, Number value, String methodName) {
+		if (!elementUtil.scrollToAndVerifyElement(inputElement, scrollableElement))
+			return false;
+
+		elementUtil.highlightElement(inputElement);
+		inputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(value), Keys.ENTER);
+		ElementUtil.takeScreenshot(driver, methodName);
+		elementUtil.undoHighlightElement(inputElement);
+		return true;
+	}
+
+	public Float[] getSliderDetails(WebElement sliderElement, List<WebElement> stepElements, String methodName) {
+		if (!elementUtil.scrollToAndVerifyElement(sliderElement, scrollableElement))
 			return null;
-		if (!elementUtil.verifyElement(emiStepElements.get(0)))
+		if (!elementUtil.verifyElement(stepElements.get(0)))
 			return null;
 
 		String sliderLeftBoundString, sliderRightBoundString;
-		WebElement sliderLeftBoundElement = emiStepElements.get(0), sliderRightBoundElement = emiStepElements.get(emiStepElements.size() - 1);
-		
+		WebElement sliderLeftBoundElement = stepElements.get(0),
+				sliderRightBoundElement = stepElements.get(stepElements.size() - 1);
+
 		elementUtil.highlightElement(sliderLeftBoundElement);
 		sliderLeftBoundString = sliderLeftBoundElement.getText().trim();
 		elementUtil.undoHighlightElement(sliderLeftBoundElement);
 		elementUtil.highlightElement(sliderRightBoundElement);
 		sliderRightBoundString = sliderRightBoundElement.getText().trim();
 		elementUtil.undoHighlightElement(sliderRightBoundElement);
-		
 
 		Float[] sliderBoundsFloats = { Float.parseFloat(sliderLeftBoundString.split("L")[0]),
 				Float.parseFloat(sliderRightBoundString.split("L")[0]) };
@@ -370,10 +243,10 @@ public class LoanCalculatorPage {
 			sliderBoundsFloats[1] *= 100000;
 		}
 
-		elementUtil.highlightElement(emiSliderElement);
-		String slidePercentageString = emiSliderElement.getAttribute("style");
-		ElementUtil.takeScreenshot(driver, "getEmiFromSlider");
-		elementUtil.undoHighlightElement(emiSliderElement);
+		elementUtil.highlightElement(sliderElement);
+		String slidePercentageString = sliderElement.getAttribute("style");
+		ElementUtil.takeScreenshot(driver, methodName);
+		elementUtil.undoHighlightElement(sliderElement);
 		Float slidePercentage = Float.parseFloat(slidePercentageString.split("[: %]+")[1]);
 
 		return new Float[] { sliderBoundsFloats[0], sliderBoundsFloats[1], slidePercentage };

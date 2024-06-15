@@ -11,7 +11,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import seleniumUtils.ElementUtil;
-import seleniumUtils.TableReader;
 import utils.TimePeriod;
 
 public class HomeLoanEmiCalculatorPage {
@@ -130,7 +129,7 @@ public class HomeLoanEmiCalculatorPage {
 			return null;
 
 		elementUtil.highlightElement(tableElement);
-		String tableData[][] = TableReader.readData(yearOnYearTableRowElements, driver);
+		String tableData[][] = elementUtil.readTableRows(yearOnYearTableRowElements);
 		ElementUtil.takeScreenshot(driver, "getYearOnYearTableData");
 		elementUtil.undoHighlightElement(tableElement);
 		return tableData;

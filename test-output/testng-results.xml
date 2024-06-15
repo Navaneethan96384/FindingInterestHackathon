@@ -2,24 +2,24 @@
 <testng-results ignored="0" total="3" passed="3" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2024-06-15T05:42:22 IST" name="TestSuite" finished-at="2024-06-15T05:43:07 IST" duration-ms="45191">
+  <suite started-at="2024-06-15T19:29:46 IST" name="TestSuite" finished-at="2024-06-15T19:30:41 IST" duration-ms="55102">
     <groups>
     </groups>
-    <test started-at="2024-06-15T05:42:22 IST" name="Test" finished-at="2024-06-15T05:43:07 IST" duration-ms="45191">
-      <class name="testCases.TestCase1">
-        <test-method signature="run()[pri:1, instance:testCases.TestCase1@3349e9bb]" started-at="2024-06-15T05:42:22 IST" name="run" finished-at="2024-06-15T05:42:41 IST" duration-ms="19300" status="PASS">
+    <test started-at="2024-06-15T19:29:46 IST" name="Test" finished-at="2024-06-15T19:30:41 IST" duration-ms="55102">
+      <class name="testng.TestCase1">
+        <test-method signature="run()[pri:1, instance:testng.TestCase1@235834f2]" started-at="2024-06-15T19:29:46 IST" name="run" finished-at="2024-06-15T19:29:55 IST" duration-ms="8684" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- run -->
-        <test-method signature="run2()[pri:2, instance:testCases.TestCase1@3349e9bb]" started-at="2024-06-15T05:42:41 IST" name="run2" finished-at="2024-06-15T05:42:50 IST" duration-ms="8593" status="PASS">
+        <test-method signature="run2()[pri:2, instance:testng.TestCase1@235834f2]" started-at="2024-06-15T19:29:55 IST" name="run2" finished-at="2024-06-15T19:30:03 IST" duration-ms="8403" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- run2 -->
-        <test-method signature="run3()[pri:3, instance:testCases.TestCase1@3349e9bb]" started-at="2024-06-15T05:42:50 IST" name="run3" finished-at="2024-06-15T05:43:07 IST" duration-ms="17270" status="PASS">
+        <test-method signature="run3()[pri:3, instance:testng.TestCase1@235834f2]" started-at="2024-06-15T19:30:03 IST" name="run3" finished-at="2024-06-15T19:30:41 IST" duration-ms="37987" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- run3 -->
-      </class> <!-- testCases.TestCase1 -->
+      </class> <!-- testng.TestCase1 -->
     </test> <!-- Test -->
   </suite> <!-- TestSuite -->
 </testng-results>

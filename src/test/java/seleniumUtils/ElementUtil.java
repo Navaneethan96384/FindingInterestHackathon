@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.Duration;
 import java.util.List;
+import java.util.Properties;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -17,6 +18,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import utils.PropertiesReader;
 
 public class ElementUtil {
 
@@ -157,6 +160,25 @@ public class ElementUtil {
 		}
 	}
 
+	public String[][] readTableRows(List<WebElement> tableRows) {
+		ElementUtil elementUtil = new ElementUtil(driver);
+		WebElement firstRowElement = tableRows.get(0);
+		List<WebElement> firstRowCellElements = elementUtil.findAndVerifyElements(firstRowElement,
+				By.xpath("./td | ./th"));
+
+		String[][] tableData = new String[tableRows.size()][firstRowCellElements.size()];
+
+		for (int i = 0; i < tableRows.size(); i++) {
+			WebElement tableRowElement = tableRows.get(i);
+			List<WebElement> rowCellElements = elementUtil.findAndVerifyElements(tableRowElement,
+					By.xpath("./td | ./th"));
+			for (int j = 0; j < rowCellElements.size(); j++) {
+				tableData[i][j] = rowCellElements.get(j).getText();
+			}
+		}
+		return tableData;
+	}
+
 	// Highlights an element in red.
 	public void highlightElement(WebElement element) {
 		jExecutor.executeScript("arguments[0].style.border='4px solid red'", element);
@@ -169,9 +191,8 @@ public class ElementUtil {
 
 	// Takes screenshot and returns the path where it is saved.
 	public static String takeScreenshot(WebDriver driver, String fileName) {
-
-		Path screenshotSavePath = Paths.get(System.getProperty("user.home")
-				+ "/eclipse-workspace/FindingInterestHackathon/src/test/resources/Screenshots/" + fileName + ".png");
+		Path screenshotSavePath = Paths
+				.get(PropertiesReader.readProperty("screenshots.path") + File.separator + fileName + ".png");
 
 		TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
 		File screenShot = takesScreenshot.getScreenshotAs(OutputType.FILE);
