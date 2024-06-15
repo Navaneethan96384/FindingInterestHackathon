@@ -5,8 +5,8 @@
 	<groupId>genc</groupId>
 	<artifactId>FindingInterestHackathon</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	
-		<build>
+
+	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -38,6 +38,13 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>7.10.2</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>com.aventstack</groupId>
 			<artifactId>extentreports</artifactId>
 			<version>5.0.6</version>
@@ -57,7 +64,7 @@
 
 		<dependency>
 			<groupId>io.cucumber</groupId>
-			<artifactId>cucumber-junit</artifactId>
+			<artifactId>cucumber-testng</artifactId>
 			<version>7.18.0</version>
 		</dependency>
 

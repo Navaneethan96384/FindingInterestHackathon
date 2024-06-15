@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="3" passed="3" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2024-06-16T05:07:05 IST" name="Default suite" finished-at="2024-06-16T05:07:57 IST" duration-ms="52352">
+    <groups>
+      <group name="cucumber">
+        <method signature="AbstractTestNGCucumberTests.runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:cucumber.runners.TestRunner@20d525]" name="runScenario" class="io.cucumber.testng.AbstractTestNGCucumberTests"/>
+      </group> <!-- cucumber -->
+    </groups>
+    <test started-at="2024-06-16T05:07:05 IST" name="Default test" finished-at="2024-06-16T05:07:57 IST" duration-ms="52352">
+      <class name="cucumber.runners.TestRunner">
+        <test-method is-config="true" signature="setUpClass(org.testng.ITestContext)[pri:0, instance:cucumber.runners.TestRunner@20d525]" started-at="2024-06-16T05:07:05 IST" name="setUpClass" finished-at="2024-06-16T05:07:05 IST" duration-ms="377" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[org.testng.TestRunner@6ce1cc03]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUpClass -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:cucumber.runners.TestRunner@20d525]" started-at="2024-06-16T05:07:05 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-06-16T05:07:14 IST" duration-ms="8552" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Calculating car loan emi with various inputs"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Calculate Car Loan Emi"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:cucumber.runners.TestRunner@20d525]" started-at="2024-06-16T05:07:14 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-06-16T05:07:38 IST" duration-ms="24450" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Calculating detailed home loan information with various inputs"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Calculate Detailed Home Loan Information Annually"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:cucumber.runners.TestRunner@20d525]" started-at="2024-06-16T05:07:38 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-06-16T05:07:57 IST" duration-ms="18912" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Performing UI tests on various loan tools"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Calculate Loan Information"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method is-config="true" signature="tearDownClass()[pri:0, instance:cucumber.runners.TestRunner@20d525]" started-at="2024-06-16T05:07:57 IST" name="tearDownClass" finished-at="2024-06-16T05:07:57 IST" duration-ms="33" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDownClass -->
+      </class> <!-- cucumber.runners.TestRunner -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

@@ -53,10 +53,10 @@ public class EmiCalculatorPage {
 	private WebDriver driver;
 	private ElementUtil elementUtil;
 
-	public EmiCalculatorPage(WebDriver driver) {
+	public EmiCalculatorPage(WebDriver driver) throws Exception{
 		this.driver = driver;
 		elementUtil = new ElementUtil(driver);
-		elementUtil.waitUntillLoadedPage();
+		if(!elementUtil.waitUntillLoadedPage()) throw new Exception("Site stuck on loading.");
 		loadElements();
 	}
 

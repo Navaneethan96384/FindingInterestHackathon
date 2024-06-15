@@ -31,9 +31,9 @@ public class ElementUtil {
 		jExecutor = (JavascriptExecutor) driver;
 	}
 
-	// To wait till a page has been completely loaded.
+	// To wait till ready-state of a web-page is complete.
 	public boolean waitUntillLoadedPage() {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
 		try {
 			// 'until' method executes the logic in apply() method from
 			// DocumentReadyStateExpectedCondition till it returns true or timeout duration
