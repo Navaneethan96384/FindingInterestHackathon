@@ -1,17 +1,13 @@
 package pageObjects;
 
-import java.util.List;
-
-import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import Utils.TimePeriod;
 import seleniumUtils.ElementUtil;
-import seleniumUtils.TableReader;
+import utils.TimePeriod;
 
 public class EmiCalculatorPage {
 
@@ -33,8 +29,14 @@ public class EmiCalculatorPage {
 	@FindBy(xpath = "//div[@class='btn-group btn-group-toggle']//label[text()='Mo ']")
 	private WebElement loanTenureMonthToggleElement;
 
-	@FindAll(@FindBy(xpath = "//div[@id='emipaymenttable']/table/tbody/tr[contains(@class,'yearlypaymentdetails')]"))
-	private List<WebElement> yearlyPaymentTableRowElements;
+	@FindBy(xpath = "//div[@id='emiamount']//span")
+	private WebElement emiAmountElement;
+
+	@FindBy(xpath = "//div[@id='emitotalinterest']//span")
+	private WebElement emiTotalInterestElement;
+
+	@FindBy(xpath = "//div[@id='emitotalamount']//span")
+	private WebElement emiTotalAmountElement;
 
 	@FindBy(xpath = "//button[@class='navbar-toggler']")
 	private WebElement navBarTogglerElement;
@@ -53,19 +55,36 @@ public class EmiCalculatorPage {
 
 	public EmiCalculatorPage(WebDriver driver) {
 		this.driver = driver;
-		loadElements();
+		driver.get("https://emicalculator.net");
 		elementUtil = new ElementUtil(driver);
+		elementUtil.waitUntillLoadedPage();
+		loadElements();
 	}
 
 	private void loadElements() {
 		PageFactory.initElements(driver, this);
 	}
 
+	public Boolean clickCarLoanTab() {
+		if (!elementUtil.scrollToAndVerifyElement(carLoanTabElement, scrollableElement))
+			return false;
+
+		elementUtil.highlightElement(carLoanTabElement);
+		ElementUtil.takeScreenshot(driver, "clickCarLoanTab");
+		carLoanTabElement.click();
+		elementUtil.undoHighlightElement(carLoanTabElement);
+		return true;
+	}
+
 	public Boolean setHomeLoanAmount(int amount) {
 		if (!elementUtil.scrollToAndVerifyElement(loanAmountInputElement, scrollableElement))
 			return false;
 
-		loanAmountInputElement.sendKeys(String.valueOf(amount));
+		elementUtil.highlightElement(loanAmountInputElement);
+		loanAmountInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(amount), Keys.ENTER);
+		ElementUtil.takeScreenshot(driver, "setHomeLoanAmount");
+		elementUtil.undoHighlightElement(loanAmountInputElement);
+
 		return true;
 	}
 
@@ -73,7 +92,10 @@ public class EmiCalculatorPage {
 		if (!elementUtil.scrollToAndVerifyElement(loanInterestInputElement, scrollableElement))
 			return false;
 
-		loanAmountInputElement.sendKeys(String.valueOf(rate));
+		elementUtil.highlightElement(loanInterestInputElement);
+		loanInterestInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(rate), Keys.ENTER);
+		ElementUtil.takeScreenshot(driver, "setInterestRate");
+		elementUtil.undoHighlightElement(loanInterestInputElement);
 		return true;
 	}
 
@@ -85,26 +107,79 @@ public class EmiCalculatorPage {
 		if (!elementUtil.verifyElement(loanTenureYearToggleElement))
 			return false;
 
-		if (timePeriod == TimePeriod.MONTH)
+		if (timePeriod == TimePeriod.MONTH) {
+			elementUtil.highlightElement(loanTenureMonthToggleElement);
+			ElementUtil.takeScreenshot(driver, "setLoanTenurePeriod");
 			loanTenureMonthToggleElement.click();
-		else
+			elementUtil.undoHighlightElement(loanTenureMonthToggleElement);
+		} else {
+			elementUtil.highlightElement(loanTenureYearToggleElement);
+			ElementUtil.takeScreenshot(driver, "setLoanTenurePeriod");
 			loanTenureYearToggleElement.click();
-		loanAmountInputElement.sendKeys(String.valueOf(duration));
+			elementUtil.undoHighlightElement(loanTenureYearToggleElement);
+		}
+
+		elementUtil.highlightElement(loanTenureInputElement);
+		loanTenureInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(duration), Keys.ENTER);
+		ElementUtil.takeScreenshot(driver, "setLoanTenure");
+		elementUtil.undoHighlightElement(loanTenureInputElement);
 		return true;
 	}
 
-	public String[][] getMonthlyPaymentDetailsForYear(int year) {
-		WebElement yearlyPaymentRowElement = yearlyPaymentTableRowElements.get(year - 1);
-		System.out.println(yearlyPaymentRowElement);
-		WebElement paymentYearToggleElement = elementUtil.findAndVerifyElement(yearlyPaymentRowElement,
-				By.xpath("//td[contains(@class,'toggle')]"));
-		if (paymentYearToggleElement == null) {
-			System.out.println("Returning null");
+	public String[] getEmiDetails() {
+		if (!elementUtil.scrollToAndVerifyElement(emiAmountElement, scrollableElement))
 			return null;
+		if (!elementUtil.verifyElement(emiTotalInterestElement))
+			return null;
+		if (!elementUtil.verifyElement(emiTotalAmountElement))
+			return null;
+
+		float annualInterestRate = Float.parseFloat(loanInterestInputElement.getAttribute("value"));
+		int principalAmount = Integer.parseInt(loanAmountInputElement.getAttribute("value"));
+		int emiAmount = Integer.parseInt(emiAmountElement.getText());
+
+		int firstMonthInterestAmount = (int) ((annualInterestRate / 12f / 100f) * principalAmount);
+		int firstMonthPrincipalAmount = emiAmount - firstMonthInterestAmount;
+
+		elementUtil.highlightElement(emiAmountElement);
+		elementUtil.highlightElement(emiTotalInterestElement);
+		elementUtil.highlightElement(emiTotalAmountElement);
+
+		String[] emiData = { emiAmountElement.getText(), emiTotalInterestElement.getText(),
+				emiTotalAmountElement.getText(), String.valueOf(firstMonthInterestAmount),
+				String.valueOf(firstMonthPrincipalAmount) };
+
+		ElementUtil.takeScreenshot(driver, "getEmiDetails");
+
+		elementUtil.undoHighlightElement(emiAmountElement);
+		elementUtil.undoHighlightElement(emiTotalInterestElement);
+		elementUtil.undoHighlightElement(emiTotalAmountElement);
+
+		return emiData;
+	}
+
+	public Boolean clickHomeLoanEmiCalculatorMenuItem() {
+		if (!elementUtil.scrollToAndVerifyElement(calculatorMenuElement, scrollableElement)) {
+			if (!elementUtil.scrollToAndVerifyElement(navBarTogglerElement, scrollableElement))
+				return false;
+			else {
+				navBarTogglerElement.click();
+				if (!elementUtil.verifyElement(calculatorMenuElement))
+					return false;
+			}
 		}
-		paymentYearToggleElement.click();
-		List<WebElement> monthlyPaymentRowElements = elementUtil.findAndVerifyElements(yearlyPaymentRowElement,
-				By.xpath("//following-sibling::tr[1]//tbody/tr"));
-		return TableReader.readData(monthlyPaymentRowElements, driver);
+
+		elementUtil.highlightElement(calculatorMenuElement);
+		ElementUtil.takeScreenshot(driver, "clickCalculatorMenuElement");
+		boolean clicked = elementUtil.clickUntilPresenceOfElement(calculatorMenuElement,
+				homeLoanEmiCalculatorMenuItemElement);
+		elementUtil.undoHighlightElement(calculatorMenuElement);
+		if (!clicked)
+			return false;
+		elementUtil.highlightElement(homeLoanEmiCalculatorMenuItemElement);
+		ElementUtil.takeScreenshot(driver, "clickHomeLoanEmiCalculator");
+		homeLoanEmiCalculatorMenuItemElement.click();
+		elementUtil.undoHighlightElement(homeLoanEmiCalculatorMenuItemElement);
+		return true;
 	}
 }

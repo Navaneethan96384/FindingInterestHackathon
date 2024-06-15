@@ -7,21 +7,20 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class TableReader {
-	
-	public static String[][] readData(List<WebElement> tableRows, WebDriver driver)
-	{
+
+	public static String[][] readData(List<WebElement> tableRows, WebDriver driver) {
 		ElementUtil elementUtil = new ElementUtil(driver);
 		WebElement firstRowElement = tableRows.get(0);
-		
-		List<WebElement> firstRowCellElements = elementUtil.findAndVerifyElements(firstRowElement, By.tagName("td"));
+		List<WebElement> firstRowCellElements = elementUtil.findAndVerifyElements(firstRowElement,
+				By.xpath("./td | ./th"));
+
 		String[][] tableData = new String[tableRows.size()][firstRowCellElements.size()];
-		
-		for(int i = 0; i < tableRows.size(); i++)
-		{
+
+		for (int i = 0; i < tableRows.size(); i++) {
 			WebElement tableRowElement = tableRows.get(i);
-			List<WebElement> rowCellElements = elementUtil.findAndVerifyElements(tableRowElement, By.tagName("td"));
-			for(int j = 0; j < rowCellElements.size(); j++)
-			{
+			List<WebElement> rowCellElements = elementUtil.findAndVerifyElements(tableRowElement,
+					By.xpath("./td | ./th"));
+			for (int j = 0; j < rowCellElements.size(); j++) {
 				tableData[i][j] = rowCellElements.get(j).getText();
 			}
 		}

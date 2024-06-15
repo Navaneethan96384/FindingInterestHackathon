@@ -13,17 +13,9 @@ public class DriverManager {
 	// Returns driver based on specified browser, each type of driver is instantiated only once.
 	public static WebDriver initDriver(String browser) {
 		if (browser.equalsIgnoreCase("edge")) {
-			if (edgeDriver == null) {
-				WebDriverManager.edgedriver().setup();
-				edgeDriver = new EdgeDriver();
-			}
-			return edgeDriver;
+			return new EdgeDriver();
 		} else {
-			if (chromeDriver == null) {
-				WebDriverManager.chromedriver().setup();
-				chromeDriver = new ChromeDriver();
-			}
-			return chromeDriver;
+			return new ChromeDriver();
 		}
 	}
 }

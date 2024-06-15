@@ -3,11 +3,11 @@
 <suite parallel="tests" name="Failed suite [TestSuite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" parallel="tests" name="Test(failed)">
     <classes>
-      <class name="selenium.TestRunner">
+      <class name="testCases.TestCase1">
         <methods>
-          <include name="method"/>
+          <include name="run"/>
         </methods>
-      </class> <!-- selenium.TestRunner -->
+      </class> <!-- testCases.TestCase1 -->
     </classes>
   </test> <!-- Test(failed) -->
 </suite> <!-- Failed suite [TestSuite] -->

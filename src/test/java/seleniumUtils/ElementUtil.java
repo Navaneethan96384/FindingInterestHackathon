@@ -21,9 +21,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class ElementUtil {
 
 	WebDriver driver;
+	JavascriptExecutor jExecutor;
 
 	public ElementUtil(WebDriver driver) {
 		this.driver = driver;
+		jExecutor = (JavascriptExecutor) driver;
 	}
 
 	// To wait till a page has been completely loaded.
@@ -87,8 +89,24 @@ public class ElementUtil {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(1500));
 		while (timer++ != 10) {
 			try {
+				wait.until(ExpectedConditions.elementToBeClickable(clickableElement));
 				clickableElement.click();
 				wait.until(ExpectedConditions.visibilityOf(element));
+				return true;
+			} catch (Exception ignored) {
+			}
+		}
+		return false;
+	}
+
+	public boolean clickUntilPresenceOfElementLocator(WebElement clickableElement, By locator) {
+		int timer = 0;
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(1500));
+		while (timer++ != 10) {
+			try {
+				wait.until(ExpectedConditions.elementToBeClickable(clickableElement));
+				clickableElement.click();
+				wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 				return true;
 			} catch (Exception ignored) {
 			}
@@ -132,16 +150,28 @@ public class ElementUtil {
 		}
 	}
 
-	// Highligts an element in red.
-	public void highlightElement(JavascriptExecutor jExecutor, WebElement element) {
+	public static void sleep(int durationInMillis) {
+		try {
+			Thread.sleep(durationInMillis);
+		} catch (Exception ignored) {
+		}
+	}
+
+	// Highlights an element in red.
+	public void highlightElement(WebElement element) {
 		jExecutor.executeScript("arguments[0].style.border='4px solid red'", element);
+		sleep(100);
+	}
+
+	public void undoHighlightElement(WebElement element) {
+		jExecutor.executeScript("arguments[0].style.border='0px solid red'", element);
 	}
 
 	// Takes screenshot and returns the path where it is saved.
 	public static String takeScreenshot(WebDriver driver, String fileName) {
 
 		Path screenshotSavePath = Paths.get(System.getProperty("user.home")
-				+ "/eclipse-workspace/projworldclock/src/test/resources/Screenshots/" + fileName + ".png");
+				+ "/eclipse-workspace/FindingInterestHackathon/src/test/resources/Screenshots/" + fileName + ".png");
 
 		TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
 		File screenShot = takesScreenshot.getScreenshotAs(OutputType.FILE);
