@@ -29,5 +29,5 @@ Feature: Calculate Detailed Home Loan Information Annually
     And the user navigates to the loan_calculator page
 
     Examples: 
-      | browser  | amount  | percent | rate | duration  | period  |
-			| chrome   | 1500000 | 0 			 | 9.5  | 1         | year    |
+      | browser  | amount   | percent | rate | duration  | period  |
+			| chrome   | 15000000 | 0 			| 9.5  | 20        | year    |
