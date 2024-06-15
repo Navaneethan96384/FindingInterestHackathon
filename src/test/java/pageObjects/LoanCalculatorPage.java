@@ -81,7 +81,6 @@ public class LoanCalculatorPage {
 
 	public LoanCalculatorPage(WebDriver driver) {
 		this.driver = driver;
-		driver.get("https://emicalculator.net/loan-calculator");
 		elementUtil = new ElementUtil(driver);
 		elementUtil.waitUntillLoadedPage();
 		loadElements();

@@ -52,7 +52,6 @@ public class HomeLoanEmiCalculatorPage {
 
 	public HomeLoanEmiCalculatorPage(WebDriver driver) {
 		this.driver = driver;
-		driver.get("https://emicalculator.net/home-loan-emi-calculator");
 		elementUtil = new ElementUtil(driver);
 		elementUtil.waitUntillLoadedPage();
 		loadElements();

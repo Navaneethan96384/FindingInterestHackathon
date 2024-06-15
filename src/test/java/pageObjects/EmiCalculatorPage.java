@@ -55,7 +55,6 @@ public class EmiCalculatorPage {
 
 	public EmiCalculatorPage(WebDriver driver) {
 		this.driver = driver;
-		driver.get("https://emicalculator.net");
 		elementUtil = new ElementUtil(driver);
 		elementUtil.waitUntillLoadedPage();
 		loadElements();
