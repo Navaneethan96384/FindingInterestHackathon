@@ -4,10 +4,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 
-import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
-
 public class DriverFactory {
 
 	// Returns driver based on specified browser.
