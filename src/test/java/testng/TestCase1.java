@@ -1,7 +1,6 @@
 package testng;
 
 import org.openqa.selenium.WebDriver;
-import org.testng.annotations.Test;
 
 import pageObjects.EmiCalculatorPage;
 import pageObjects.HomeLoanEmiCalculatorPage;
@@ -12,7 +11,7 @@ import utils.TimePeriod;
 
 public class TestCase1 {
 	
-	@Test(priority = 1)
+//	@Test(priority = 1)
 	public void run()
 	{
 		WebDriver driver = DriverFactory.createDriver("chrome");
@@ -27,7 +26,7 @@ public class TestCase1 {
 		driver.quit();
 	}
 	
-	@Test(priority = 2)
+//	@Test(priority = 2)
 	public void run2()
 	{
 		WebDriver driver = DriverFactory.createDriver("chrome");
@@ -43,7 +42,7 @@ public class TestCase1 {
 		driver.quit();	
 	}
 	
-	@Test(priority = 3)
+//	@Test(priority = 3)
 	public void run3()
 	{
 		WebDriver driver = DriverFactory.createDriver("chrome");

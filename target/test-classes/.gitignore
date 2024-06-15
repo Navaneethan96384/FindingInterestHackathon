@@ -1,8 +1,2 @@
-/stepDefinitions/
-/runners/
-/testNG/
-/testng/
 /cucumber/
-/seleniumUtils/
-/utils/
-/pageObjects/
+/testng/

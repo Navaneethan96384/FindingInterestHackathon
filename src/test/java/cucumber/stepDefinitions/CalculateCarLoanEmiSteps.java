@@ -1,14 +1,13 @@
 package cucumber.stepDefinitions;
 
-import static org.testng.Assert.assertTrue;
 
-import java.util.Arrays;
 
 import org.openqa.selenium.WebDriver;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import static org.junit.Assert.*;
 import pageObjects.EmiCalculatorPage;
 import seleniumUtils.DriverFactory;
 import utils.PropertiesReader;
@@ -39,7 +38,7 @@ public class CalculateCarLoanEmiSteps{
     	assertTrue(emiCalculatorPage.clickCarLoanTab());
     }
 
-    @When("the user enters the car loan {int}")
+	@When("the user enters the car loan {int}")
     public void the_user_enters_the_car_loan(Integer amount) {
     	assertTrue(emiCalculatorPage.setCarLoanAmount(amount));
     }
@@ -61,6 +60,6 @@ public class CalculateCarLoanEmiSteps{
 
     @Then("I verify and display the emi details")
     public void I_verify_and_display_the_emi_details() {
-    	System.out.println(Arrays.toString(emiCalculatorPage.getEmiDetails()));
+    	emiCalculatorPage.getEmiDetails();
     }
 }
