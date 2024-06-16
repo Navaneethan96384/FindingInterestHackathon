@@ -8,8 +8,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.Duration;
 import java.util.List;
-import java.util.Properties;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -19,6 +17,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import cucumber.hooks.ScreenshotHook;
 import utils.PropertiesReader;
 
 public class ElementUtil {
@@ -47,9 +46,9 @@ public class ElementUtil {
 	}
 
 	// Wait & verify an element.
-	public boolean verifyElement(WebElement element) {
+	public boolean verifyElement(WebElement element, Duration... duration) {
 		waitUntillLoadedPage();
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebDriverWait wait = new WebDriverWait(driver, duration.length == 0 ? Duration.ofSeconds(10) : duration[0]);
 		try {
 			wait.until(ExpectedConditions.visibilityOf(element));
 			return true;
@@ -72,7 +71,7 @@ public class ElementUtil {
 	// Scroll untill an element is found on the scrollable element.
 	public boolean scrollToElement(WebElement element, WebElement scrollableElement) {
 		waitUntillLoadedPage();
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofMinutes(1));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		try {
 			wait.until(new ScrollUntillElementFound(element, scrollableElement));
 			return true;
@@ -92,7 +91,7 @@ public class ElementUtil {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(1500));
 		while (timer++ != 10) {
 			try {
-				wait.until(ExpectedConditions.elementToBeClickable(clickableElement));
+				wait.until(ExpectedConditions.elementToBeClickable(clickableElement));;
 				clickableElement.click();
 				wait.until(ExpectedConditions.visibilityOf(element));
 				return true;
@@ -182,7 +181,7 @@ public class ElementUtil {
 	// Highlights an element in red.
 	public void highlightElement(WebElement element) {
 		jExecutor.executeScript("arguments[0].style.border='4px solid red'", element);
-		sleep(100);
+		sleep(50);
 	}
 
 	public void undoHighlightElement(WebElement element) {
@@ -190,9 +189,10 @@ public class ElementUtil {
 	}
 
 	// Takes screenshot and returns the path where it is saved.
-	public static String takeScreenshot(WebDriver driver, String fileName) {
+	public static String takeScreenshot(WebDriver driver, String browserName, String fileName) {
+		
 		Path screenshotSavePath = Paths
-				.get(PropertiesReader.readProperty("screenshots.path") + File.separator + fileName + ".png");
+				.get(PropertiesReader.readProperty("screenshots.path") + File.separator + fileName + "_" + browserName + ".png");
 
 		TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
 		File screenShot = takesScreenshot.getScreenshotAs(OutputType.FILE);
@@ -202,6 +202,8 @@ public class ElementUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		ScreenshotHook.mostRecentScreenshotTakenPath = screenshotSavePath;
 		return screenshotSavePath.toString();
 	}
 }

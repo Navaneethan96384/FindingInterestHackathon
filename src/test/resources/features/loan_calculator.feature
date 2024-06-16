@@ -53,4 +53,5 @@ Feature: Calculate Loan Information
 
     Examples: 
       | browser  | amount   | emi   | rate | fees | duration | period  |
-			| chrome   | 35000000 | 60000 | 8.5  | 0    | 1        | year    |
+			| chrome   | 7000000 | 90000 | 12.5  | 0    | 10       | year    |
+			| edge     | 5000000 | 60000 | 13    | 0    | 60       | month   |

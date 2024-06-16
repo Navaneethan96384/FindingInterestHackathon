@@ -77,12 +77,14 @@ public class LoanCalculatorPage {
 	private WebElement scrollableElement;
 
 	private WebDriver driver;
+	private String browserName;
 	private ElementUtil elementUtil;
 
-	public LoanCalculatorPage(WebDriver driver) {
+	public LoanCalculatorPage(WebDriver driver, String browserName) throws Exception {
 		this.driver = driver;
+		this.browserName = browserName;
 		elementUtil = new ElementUtil(driver);
-		elementUtil.waitUntillLoadedPage();
+		if(!elementUtil.waitUntillLoadedPage()) throw new Exception("Site stuck on loading");
 		loadElements();
 	}
 
@@ -96,7 +98,7 @@ public class LoanCalculatorPage {
 
 		elementUtil.highlightElement(emiCalculatorTabElement);
 		emiCalculatorTabElement.click();
-		ElementUtil.takeScreenshot(driver, "clickEmiCalculatorTab");
+		ElementUtil.takeScreenshot(driver, browserName, "clickEmiCalculatorTab");
 		elementUtil.undoHighlightElement(emiCalculatorTabElement);
 		return true;
 	}
@@ -107,7 +109,7 @@ public class LoanCalculatorPage {
 
 		elementUtil.highlightElement(loanAmountCalculatorTabElement);
 		loanAmountCalculatorTabElement.click();
-		ElementUtil.takeScreenshot(driver, "clickLoanAmountCalculatorTab");
+		ElementUtil.takeScreenshot(driver, browserName, "clickLoanAmountCalculatorTab");
 		elementUtil.undoHighlightElement(loanAmountCalculatorTabElement);
 		return true;
 	}
@@ -118,13 +120,17 @@ public class LoanCalculatorPage {
 
 		elementUtil.highlightElement(loanTenureCalculatorTabElement);
 		loanTenureCalculatorTabElement.click();
-		ElementUtil.takeScreenshot(driver, "clickLoanTenureCalculatorTab");
+		ElementUtil.takeScreenshot(driver, browserName, "clickLoanTenureCalculatorTab");
 		elementUtil.undoHighlightElement(loanTenureCalculatorTabElement);
 		return true;
 	}
 
 	public Boolean setLoanAmountOnInput(int amount) {
 		return setValueOnInput(loanAmountInputElement, amount, "setLoanAmountOnInput");
+	}
+	
+	public Integer getLoanAmountFromInput() {
+		return Integer.parseInt(getValueFromInput(loanAmountInputElement));
 	}
 
 	public Float[] getLoanAmountFromSlider() {
@@ -133,6 +139,10 @@ public class LoanCalculatorPage {
 
 	public Boolean setLoanInterestOnInput(float rate) {
 		return setValueOnInput(loanInterestInputElement, rate, "setLoanInterestOnInput");
+	}
+	
+	public Float getLoanInterestFromInput() {
+		return Float.parseFloat(getValueFromInput(loanInterestInputElement));
 	}
 
 	public Float[] getLoanInterestFromSlider() {
@@ -149,17 +159,29 @@ public class LoanCalculatorPage {
 
 		if (timePeriod == TimePeriod.MONTH) {
 			elementUtil.highlightElement(loanTenureMonthToggleElement);
-			ElementUtil.takeScreenshot(driver, "setLoanTenurePeriod");
 			loanTenureMonthToggleElement.click();
 			elementUtil.undoHighlightElement(loanTenureMonthToggleElement);
 		} else {
 			elementUtil.highlightElement(loanTenureYearToggleElement);
-			ElementUtil.takeScreenshot(driver, "setLoanTenurePeriod");
 			loanTenureYearToggleElement.click();
 			elementUtil.undoHighlightElement(loanTenureYearToggleElement);
 		}
 
 		return setValueOnInput(loanTenureInputElement, duration, "setLoanTenureOnInput");
+	}
+	
+	public Integer getLoanTenureFromInput(TimePeriod timePeriod) {
+		if (timePeriod == TimePeriod.MONTH) {
+			elementUtil.highlightElement(loanTenureMonthToggleElement);
+			loanTenureMonthToggleElement.click();
+			elementUtil.undoHighlightElement(loanTenureMonthToggleElement);
+		} else {
+			elementUtil.highlightElement(loanTenureYearToggleElement);
+			loanTenureYearToggleElement.click();
+			elementUtil.undoHighlightElement(loanTenureYearToggleElement);
+		}
+		
+		return Integer.parseInt(getValueFromInput(loanTenureInputElement));
 	}
 
 	public Float[] getLoanTenureFromSlider(TimePeriod timePeriod) {
@@ -172,12 +194,10 @@ public class LoanCalculatorPage {
 
 		if (timePeriod == TimePeriod.MONTH) {
 			elementUtil.highlightElement(loanTenureMonthToggleElement);
-			ElementUtil.takeScreenshot(driver, "setLoanTenurePeriod");
 			loanTenureMonthToggleElement.click();
 			elementUtil.undoHighlightElement(loanTenureMonthToggleElement);
 		} else {
 			elementUtil.highlightElement(loanTenureYearToggleElement);
-			ElementUtil.takeScreenshot(driver, "setLoanTenurePeriod");
 			loanTenureYearToggleElement.click();
 			elementUtil.undoHighlightElement(loanTenureYearToggleElement);
 		}
@@ -191,6 +211,10 @@ public class LoanCalculatorPage {
 
 		return setValueOnInput(loanFeesInputElement, amount, "setLoanFeesOnInput");
 	}
+	
+	public Integer getLoanFeesFromInput() {
+		return Integer.parseInt(getValueFromInput(loanFeesInputElement));
+	}
 
 	public Float[] getLoanFeesFromSlider() {
 		return getSliderDetails(loanFeesSliderElement, loanFeesStepElements, "getLoanFeesFromSlider");
@@ -201,6 +225,10 @@ public class LoanCalculatorPage {
 			return false;
 
 		return setValueOnInput(emiInputElement, amount, "setEmiOnInput");
+	}
+	
+	public Float getEmiFromInput() {
+		return Float.parseFloat(getValueFromInput(emiInputElement));
 	}
 
 	public Float[] getEmiFromSlider() {
@@ -213,9 +241,19 @@ public class LoanCalculatorPage {
 
 		elementUtil.highlightElement(inputElement);
 		inputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(value), Keys.ENTER);
-		ElementUtil.takeScreenshot(driver, methodName);
+		ElementUtil.takeScreenshot(driver, browserName, methodName);
 		elementUtil.undoHighlightElement(inputElement);
 		return true;
+	}
+	
+	public String getValueFromInput(WebElement inputElement) {
+		if (!elementUtil.scrollToAndVerifyElement(inputElement, scrollableElement))
+			return null;
+
+		elementUtil.highlightElement(inputElement);
+		String value = inputElement.getAttribute("value").replaceAll(",", "");
+		elementUtil.undoHighlightElement(inputElement);
+		return value;
 	}
 
 	public Float[] getSliderDetails(WebElement sliderElement, List<WebElement> stepElements, String methodName) {
@@ -244,7 +282,6 @@ public class LoanCalculatorPage {
 
 		elementUtil.highlightElement(sliderElement);
 		String slidePercentageString = sliderElement.getAttribute("style");
-		ElementUtil.takeScreenshot(driver, methodName);
 		elementUtil.undoHighlightElement(sliderElement);
 		Float slidePercentage = Float.parseFloat(slidePercentageString.split("[: %]+")[1]);
 

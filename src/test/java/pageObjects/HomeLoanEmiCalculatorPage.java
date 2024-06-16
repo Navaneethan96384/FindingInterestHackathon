@@ -1,5 +1,6 @@
 package pageObjects;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -11,6 +12,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import seleniumUtils.ElementUtil;
+import utils.PropertiesReader;
 import utils.TimePeriod;
 
 public class HomeLoanEmiCalculatorPage {
@@ -48,12 +50,14 @@ public class HomeLoanEmiCalculatorPage {
 	private WebElement scrollableElement;
 
 	private WebDriver driver;
+	private String browserName;
 	private ElementUtil elementUtil;
 
-	public HomeLoanEmiCalculatorPage(WebDriver driver) {
+	public HomeLoanEmiCalculatorPage(WebDriver driver, String browserName) throws Exception {
 		this.driver = driver;
+		this.browserName = browserName;
 		elementUtil = new ElementUtil(driver);
-		elementUtil.waitUntillLoadedPage();
+		if(!elementUtil.waitUntillLoadedPage()) throw new Exception("Site stuck on loading");
 		loadElements();
 	}
 
@@ -67,7 +71,7 @@ public class HomeLoanEmiCalculatorPage {
 
 		elementUtil.highlightElement(homeValueInputElement);
 		homeValueInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(amount), Keys.ENTER);
-		ElementUtil.takeScreenshot(driver, "setHomeValue");
+		ElementUtil.takeScreenshot(driver, browserName, "setHomeValue");
 		elementUtil.undoHighlightElement(homeValueInputElement);
 		return true;
 	}
@@ -78,7 +82,7 @@ public class HomeLoanEmiCalculatorPage {
 
 		elementUtil.highlightElement(downPaymentInputElement);
 		downPaymentInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(percent), Keys.ENTER);
-		ElementUtil.takeScreenshot(driver, "setDownPaymentPercentage");
+		ElementUtil.takeScreenshot(driver, browserName, "setDownPaymentPercentage");
 		elementUtil.undoHighlightElement(downPaymentInputElement);
 		return true;
 	}
@@ -89,7 +93,7 @@ public class HomeLoanEmiCalculatorPage {
 
 		elementUtil.highlightElement(interestRateInputElement);
 		interestRateInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(rate), Keys.ENTER);
-		ElementUtil.takeScreenshot(driver, "setInterestRate");
+		ElementUtil.takeScreenshot(driver, browserName, "setHomeLoanInterestRate");
 		elementUtil.undoHighlightElement(interestRateInputElement);
 		return true;
 	}
@@ -104,19 +108,17 @@ public class HomeLoanEmiCalculatorPage {
 
 		if (timePeriod == TimePeriod.MONTH) {
 			elementUtil.highlightElement(loanTenureMonthToggleElement);
-			ElementUtil.takeScreenshot(driver, "setLoanTenurePeriod");
 			loanTenureMonthToggleElement.click();
 			elementUtil.undoHighlightElement(loanTenureMonthToggleElement);
 		} else {
 			elementUtil.highlightElement(loanTenureYearToggleElement);
-			ElementUtil.takeScreenshot(driver, "setLoanTenurePeriod");
 			loanTenureYearToggleElement.click();
 			elementUtil.undoHighlightElement(loanTenureYearToggleElement);
 		}
 
 		elementUtil.highlightElement(loanTenureInputElement);
 		loanTenureInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(duration), Keys.ENTER);
-		ElementUtil.takeScreenshot(driver, "setLoanTenure");
+		ElementUtil.takeScreenshot(driver, browserName, "setHomeLoanTenure");
 		elementUtil.undoHighlightElement(loanTenureInputElement);
 		return true;
 	}
@@ -129,14 +131,14 @@ public class HomeLoanEmiCalculatorPage {
 
 		elementUtil.highlightElement(tableElement);
 		String tableData[][] = elementUtil.readTableRows(yearOnYearTableRowElements);
-		ElementUtil.takeScreenshot(driver, "getYearOnYearTableData");
+		ElementUtil.takeScreenshot(driver, browserName, "getYearOnYearTableData");
 		elementUtil.undoHighlightElement(tableElement);
 		return tableData;
 	}
 
-	public Boolean clickLoanCalculatorMenuItem() {
-		if (!elementUtil.scrollToAndVerifyElement(calculatorMenuElement, scrollableElement)) {
-			if (!elementUtil.scrollToAndVerifyElement(navBarTogglerElement, scrollableElement))
+	public Boolean clickLoanCalculatorMenuItem() throws Exception {
+		if (!elementUtil.verifyElement(calculatorMenuElement, Duration.ofSeconds(1))) {
+			if (!elementUtil.verifyElement(navBarTogglerElement))
 				return false;
 			else {
 				navBarTogglerElement.click();
@@ -146,13 +148,14 @@ public class HomeLoanEmiCalculatorPage {
 		}
 
 		elementUtil.highlightElement(calculatorMenuElement);
-		ElementUtil.takeScreenshot(driver, "clickCalculatorMenuElement");
 		boolean clicked = elementUtil.clickUntilPresenceOfElement(calculatorMenuElement, loanCalculatorMenuItemElement);
 		elementUtil.undoHighlightElement(calculatorMenuElement);
 		if (!clicked)
 			return false;
 		elementUtil.highlightElement(loanCalculatorMenuItemElement);
-		ElementUtil.takeScreenshot(driver, "clickHomeLoanEmiCalculator");
+		ElementUtil.takeScreenshot(driver, browserName, "clickLoanCalculator");
+		if(!loanCalculatorMenuItemElement.getAttribute("href").equalsIgnoreCase(PropertiesReader.readProperty("loancalculator.url")))
+			throw new Exception("Wrong url exception");
 		loanCalculatorMenuItemElement.click();
 		elementUtil.undoHighlightElement(loanCalculatorMenuItemElement);
 		return true;

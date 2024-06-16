@@ -3,17 +3,13 @@ package cucumber.stepDefinitions;
 import static org.testng.Assert.assertTrue;
 
 import org.openqa.selenium.WebDriver;
-import org.testng.TestNG;
 
-import cucumber.runners.TestRunner;
-import io.cucumber.java.After;
-import io.cucumber.java.Scenario;
+import cucumber.hooks.WebDriverHook;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pageObjects.EmiCalculatorPage;
-import seleniumUtils.DriverFactory;
 import utils.PropertiesReader;
 import utils.TimePeriod;
 
@@ -24,17 +20,17 @@ public class CalculateCarLoanEmiSteps {
 	@Given("the user is on the emi_calculator page using chrome")
 	public void the_user_is_on_the_emi_calculator_page_using_chrome() throws Exception {
 
-		driver = DriverFactory.createDriver("chrome");
+		driver = WebDriverHook.getDriver("chrome");
 		driver.get(PropertiesReader.readProperty("emicalculator.url"));
-		emiCalculatorPage = new EmiCalculatorPage(driver);
+		emiCalculatorPage = new EmiCalculatorPage(driver, "chrome");
 	}
 
 	@Given("the user is on the emi_calculator page using edge")
 	public void the_user_is_on_the_emi_calculator_page_using_edge() throws Exception {
 
-		driver = DriverFactory.createDriver("edge");
+		driver = WebDriverHook.getDriver("edge");
 		driver.get(PropertiesReader.readProperty("emicalculator.url"));
-		emiCalculatorPage = new EmiCalculatorPage(driver);
+		emiCalculatorPage = new EmiCalculatorPage(driver, "edge");
 	}
 
 	@When("the user clicks on the car_loan tab")
@@ -64,18 +60,41 @@ public class CalculateCarLoanEmiSteps {
 
 	@Then("I verify and display the car emi details")
 	public void I_verify_and_display_the_emi_details() {
-		emiCalculatorPage.getEmiDetails();
+		String[] emiDetails = emiCalculatorPage.getEmiDetails();
+		assertTrue(emiDetails != null);
+		
+		Integer monthlyEmiAmount = Integer.parseInt(emiDetails[0].replaceAll(",", ""));
+		
+		Integer principalAmount = Integer.parseInt(emiCalculatorPage.getCarLoanAmountAsString());
+		Float interest = Float.parseFloat(emiCalculatorPage.getCarLoanInterestAsString());
+		Integer loanTenureInMonths = Integer.parseInt(emiCalculatorPage.getLoanTenureInMonthsAsString());
+		
+		Float monthlyInterestRate = interest / 12 / 100;
+		
+		Integer calculatedMonthlyEmiAmount = (int) (principalAmount * monthlyInterestRate * ((Math.pow(1 + monthlyInterestRate, loanTenureInMonths)) / (Math.pow(1 + monthlyInterestRate, loanTenureInMonths) - 1)));
+	
+		
+		Integer difference =  Math.abs(monthlyEmiAmount - calculatedMonthlyEmiAmount);
+		Integer deviationPercentage = (difference / monthlyEmiAmount) * 100;
+		
+		System.out.println();
+		System.out.println("  Car Loan EMI Details: ");
+		System.out.println("  Monthly EMI Amount: " + emiDetails[0]);
+		System.out.println("  Total Interest Amount: " + emiDetails[1]);
+		System.out.println("  Total Principal Amount: " + emiDetails[2]);
+		System.out.println("  First Month Interest Amount: " + emiDetails[3]);
+		System.out.println("  First Month Principal Amount: " + emiDetails[4]);
+		
+		assertTrue(deviationPercentage < 1);
+		System.out.println();
+		System.out.println("  Calculated Monthly EMI Amount: " + calculatedMonthlyEmiAmount);
+		System.out.println("  Car Loan EMI Details Verified and Validated.");
+		System.out.println();
 	}
 	
 	@And("the user navigates to home_loan_calculator page")
-	public void the_user_navigates_to_home_loan_calculator_page()
+	public void the_user_navigates_to_home_loan_calculator_page() throws Exception
 	{
 		assertTrue(emiCalculatorPage.clickHomeLoanEmiCalculatorMenuItem());
-	}
-
-	@After
-	public void afterScenario() {
-		if(driver != null)
-		driver.close();
 	}
 }

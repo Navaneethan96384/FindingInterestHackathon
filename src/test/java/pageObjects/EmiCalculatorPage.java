@@ -1,5 +1,7 @@
 package pageObjects;
 
+import java.time.Duration;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -7,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import seleniumUtils.ElementUtil;
+import utils.PropertiesReader;
 import utils.TimePeriod;
 
 public class EmiCalculatorPage {
@@ -51,12 +54,14 @@ public class EmiCalculatorPage {
 	private WebElement scrollableElement;
 
 	private WebDriver driver;
+	private String browserName;
 	private ElementUtil elementUtil;
 
-	public EmiCalculatorPage(WebDriver driver) throws Exception{
+	public EmiCalculatorPage(WebDriver driver, String browserName) throws Exception{
 		this.driver = driver;
+		this.browserName = browserName;
 		elementUtil = new ElementUtil(driver);
-		if(!elementUtil.waitUntillLoadedPage()) throw new Exception("Site stuck on loading.");
+		if(!elementUtil.waitUntillLoadedPage()) throw new Exception("Site stuck on loading");
 		loadElements();
 	}
 
@@ -69,7 +74,7 @@ public class EmiCalculatorPage {
 			return false;
 
 		elementUtil.highlightElement(carLoanTabElement);
-		ElementUtil.takeScreenshot(driver, "clickCarLoanTab");
+		ElementUtil.takeScreenshot(driver, browserName, "clickCarLoanTab");
 		carLoanTabElement.click();
 		elementUtil.undoHighlightElement(carLoanTabElement);
 		return true;
@@ -81,10 +86,15 @@ public class EmiCalculatorPage {
 
 		elementUtil.highlightElement(loanAmountInputElement);
 		loanAmountInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(amount), Keys.ENTER);
-		ElementUtil.takeScreenshot(driver, "setHomeLoanAmount");
+		ElementUtil.takeScreenshot(driver, browserName, "setCarLoanAmount");
 		elementUtil.undoHighlightElement(loanAmountInputElement);
 
 		return true;
+	}
+	
+	public String getCarLoanAmountAsString()
+	{
+		return getValueFromInputAsString(loanAmountInputElement);
 	}
 
 	public Boolean setInterestRate(float rate) {
@@ -93,9 +103,14 @@ public class EmiCalculatorPage {
 
 		elementUtil.highlightElement(loanInterestInputElement);
 		loanInterestInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(rate), Keys.ENTER);
-		ElementUtil.takeScreenshot(driver, "setInterestRate");
+		ElementUtil.takeScreenshot(driver, browserName, "setCarLoanInterestRate");
 		elementUtil.undoHighlightElement(loanInterestInputElement);
 		return true;
+	}
+	
+	public String getCarLoanInterestAsString()
+	{
+		return getValueFromInputAsString(loanInterestInputElement);
 	}
 
 	public Boolean setLoanTenure(int duration, TimePeriod timePeriod) {
@@ -108,21 +123,36 @@ public class EmiCalculatorPage {
 
 		if (timePeriod == TimePeriod.MONTH) {
 			elementUtil.highlightElement(loanTenureMonthToggleElement);
-			ElementUtil.takeScreenshot(driver, "setLoanTenurePeriod");
 			loanTenureMonthToggleElement.click();
 			elementUtil.undoHighlightElement(loanTenureMonthToggleElement);
 		} else {
 			elementUtil.highlightElement(loanTenureYearToggleElement);
-			ElementUtil.takeScreenshot(driver, "setLoanTenurePeriod");
 			loanTenureYearToggleElement.click();
 			elementUtil.undoHighlightElement(loanTenureYearToggleElement);
 		}
 
 		elementUtil.highlightElement(loanTenureInputElement);
 		loanTenureInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(duration), Keys.ENTER);
-		ElementUtil.takeScreenshot(driver, "setLoanTenure");
+		ElementUtil.takeScreenshot(driver, browserName, "setCarLoanTenure");
 		elementUtil.undoHighlightElement(loanTenureInputElement);
 		return true;
+	}
+	
+	public String getLoanTenureInMonthsAsString()
+	{
+		elementUtil.highlightElement(loanTenureMonthToggleElement);
+		loanTenureMonthToggleElement.click();
+		elementUtil.undoHighlightElement(loanTenureMonthToggleElement);
+		
+		return getValueFromInputAsString(loanTenureInputElement);
+	}
+	
+	public String getValueFromInputAsString(WebElement element) {
+		elementUtil.highlightElement(element);
+		String valueOnInputElement = element.getAttribute("value").replaceAll(",", "");
+		elementUtil.undoHighlightElement(element);
+
+		return valueOnInputElement;
 	}
 
 	public String[] getEmiDetails() {
@@ -148,7 +178,7 @@ public class EmiCalculatorPage {
 				emiTotalAmountElement.getText(), String.valueOf(firstMonthInterestAmount),
 				String.valueOf(firstMonthPrincipalAmount) };
 
-		ElementUtil.takeScreenshot(driver, "getEmiDetails");
+		ElementUtil.takeScreenshot(driver, browserName, "getEmiDetails");
 
 		elementUtil.undoHighlightElement(emiAmountElement);
 		elementUtil.undoHighlightElement(emiTotalInterestElement);
@@ -157,26 +187,27 @@ public class EmiCalculatorPage {
 		return emiData;
 	}
 
-	public Boolean clickHomeLoanEmiCalculatorMenuItem() {
-		if (!elementUtil.scrollToAndVerifyElement(calculatorMenuElement, scrollableElement)) {
-			if (!elementUtil.scrollToAndVerifyElement(navBarTogglerElement, scrollableElement))
+	public Boolean clickHomeLoanEmiCalculatorMenuItem() throws Exception {
+		if (!elementUtil.verifyElement(calculatorMenuElement, Duration.ofSeconds(1))) {
+			if (!elementUtil.verifyElement(navBarTogglerElement))
 				return false;
 			else {
-				navBarTogglerElement.click();
+				elementUtil.clickUntilPresenceOfElement(navBarTogglerElement, calculatorMenuElement);
 				if (!elementUtil.verifyElement(calculatorMenuElement))
 					return false;
 			}
 		}
 
 		elementUtil.highlightElement(calculatorMenuElement);
-		ElementUtil.takeScreenshot(driver, "clickCalculatorMenuElement");
 		boolean clicked = elementUtil.clickUntilPresenceOfElement(calculatorMenuElement,
 				homeLoanEmiCalculatorMenuItemElement);
 		elementUtil.undoHighlightElement(calculatorMenuElement);
 		if (!clicked)
 			return false;
 		elementUtil.highlightElement(homeLoanEmiCalculatorMenuItemElement);
-		ElementUtil.takeScreenshot(driver, "clickHomeLoanEmiCalculator");
+		ElementUtil.takeScreenshot(driver, browserName, "clickHomeLoanEmiCalculator");
+		if(!homeLoanEmiCalculatorMenuItemElement.getAttribute("href").equalsIgnoreCase(PropertiesReader.readProperty("homeloanemicalculator.url")))
+			throw new Exception("Wrong url exception");
 		homeLoanEmiCalculatorMenuItemElement.click();
 		elementUtil.undoHighlightElement(homeLoanEmiCalculatorMenuItemElement);
 		return true;
