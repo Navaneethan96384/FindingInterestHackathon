@@ -28,7 +28,7 @@ Feature: Calculate Loan Information
     When the user on emi_calculator tab enters the loan fees <fees>
     Then I verify the loan amount ui on emi_calculator tab
     Then I verify the loan interest ui on emi_calculator tab
-    Then I verify the <period> loan tenure ui on emi_calculator tab
+    Then I verify the loan tenure <period> ui on emi_calculator tab
     Then I verify the loan fees ui on emi_calculator tab
     
     Given the user clicks on the loan_amount_calculator tab
@@ -38,7 +38,7 @@ Feature: Calculate Loan Information
     When the user on loan_amount_calculator tab enters the loan fees <fees>
     Then I verify the loan emi ui on loan_amount_calculator tab
     Then I verify the loan interest ui on loan_amount_calculator tab
-    Then I verify the <period> loan tenure ui on loan_amount_calculator tab
+    Then I verify the loan tenure <period> ui on loan_amount_calculator tab
     Then I verify the loan fees ui on loan_amount_calculator tab
     
     Given the user clicks on the loan_tenure_calculator tab

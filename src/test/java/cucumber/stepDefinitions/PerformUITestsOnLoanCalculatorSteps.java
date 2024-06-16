@@ -75,12 +75,12 @@ public class PerformUITestsOnLoanCalculatorSteps {
 		loanCalculatorPage.getLoanInterestFromSlider();
 	}
 	
-	@Then("I verify the year loan tenure ui on emi_calculator tab")
+	@Then("I verify the loan tenure year ui on emi_calculator tab")
 	public void I_verify_the_year_loan_tenure_ui_on_emi_calculator_tab() {
 		loanCalculatorPage.getLoanTenureFromSlider(TimePeriod.YEAR);
 	}
 	
-	@Then("I verify the month loan tenure ui on emi_calculator tab")
+	@Then("I verify the loan tenure ui month on emi_calculator tab")
 	public void I_verify_the_month_loan_tenure_ui_on_emi_calculator_tab() {
 		loanCalculatorPage.getLoanTenureFromSlider(TimePeriod.MONTH);
 	}
@@ -132,12 +132,12 @@ public class PerformUITestsOnLoanCalculatorSteps {
 		loanCalculatorPage.getLoanInterestFromSlider();
 	}
 	
-	@Then("I verify the year loan tenure ui on loan_amount_calculator tab")
+	@Then("I verify the loan tenure year ui on loan_amount_calculator tab")
 	public void I_verify_the_year_loan_tenure_ui_on_loan_amount_calculator_tab() {
 		loanCalculatorPage.getLoanTenureFromSlider(TimePeriod.YEAR);
 	}
 	
-	@Then("I verify the month loan tenure ui on loan_amount_calculator tab")
+	@Then("I verify the loan tenure month ui on loan_amount_calculator tab")
 	public void I_verify_the_month_loan_tenure_ui_on_loan_amount_calculator_tab() {
 		loanCalculatorPage.getLoanTenureFromSlider(TimePeriod.MONTH);
 	}
