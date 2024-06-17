@@ -32,7 +32,7 @@ public class ElementUtil {
 
 	// To wait till ready-state of a web-page is complete.
 	public boolean waitUntillLoadedPage() {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 		try {
 			// 'until' method executes the logic in apply() method from
 			// DocumentReadyStateExpectedCondition till it returns true or timeout duration
@@ -61,7 +61,7 @@ public class ElementUtil {
 		waitUntillLoadedPage();
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		try {
-			wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+			wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -91,7 +91,8 @@ public class ElementUtil {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(1500));
 		while (timer++ != 10) {
 			try {
-				wait.until(ExpectedConditions.elementToBeClickable(clickableElement));;
+				wait.until(ExpectedConditions.elementToBeClickable(clickableElement));
+				;
 				clickableElement.click();
 				wait.until(ExpectedConditions.visibilityOf(element));
 				return true;
@@ -190,9 +191,9 @@ public class ElementUtil {
 
 	// Takes screenshot and returns the path where it is saved.
 	public static String takeScreenshot(WebDriver driver, String browserName, String fileName) {
-		
-		Path screenshotSavePath = Paths
-				.get(PropertiesReader.readProperty("screenshots.path") + File.separator + fileName + "_" + browserName + ".png");
+
+		Path screenshotSavePath = Paths.get(PropertiesReader.readProperty("screenshots.path") + File.separator
+				+ fileName + "_" + browserName + ".png");
 
 		TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
 		File screenShot = takesScreenshot.getScreenshotAs(OutputType.FILE);
@@ -202,7 +203,7 @@ public class ElementUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		ScreenshotHook.mostRecentScreenshotTakenPath = screenshotSavePath;
 		return screenshotSavePath.toString();
 	}

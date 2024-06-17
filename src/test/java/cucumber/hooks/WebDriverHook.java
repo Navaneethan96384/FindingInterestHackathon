@@ -7,7 +7,7 @@ import seleniumUtils.DriverFactory;
 
 public class WebDriverHook {
 	private static WebDriver driver;
-	
+
 	public static WebDriver getDriver(String browser) {
 		driver = DriverFactory.createDriver(browser);
 		return driver;

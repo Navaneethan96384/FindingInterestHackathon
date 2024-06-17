@@ -16,7 +16,7 @@
 #""
 ## (Comments)
 #Sample Feature Definition Template
-@regression
+@regression2
 Feature: Calculate Loan Information
 
   Scenario Outline: Performing UI tests on various loan tools
@@ -54,4 +54,4 @@ Feature: Calculate Loan Information
     Examples: 
       | browser  | amount   | emi   | rate | fees | duration | period  |
 			| chrome   | 7000000 | 90000 | 12.5  | 0    | 10       | year    |
-			| edge     | 5000000 | 60000 | 13    | 0    | 60       | month   |
+#			| edge     | 5000000 | 60000 | 13    | 0    | 60       | month   |

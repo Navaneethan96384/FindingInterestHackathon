@@ -84,7 +84,8 @@ public class LoanCalculatorPage {
 		this.driver = driver;
 		this.browserName = browserName;
 		elementUtil = new ElementUtil(driver);
-		if(!elementUtil.waitUntillLoadedPage()) throw new Exception("Site stuck on loading");
+		if (!elementUtil.waitUntillLoadedPage())
+			throw new Exception("Site stuck on loading");
 		loadElements();
 	}
 
@@ -128,7 +129,7 @@ public class LoanCalculatorPage {
 	public Boolean setLoanAmountOnInput(int amount) {
 		return setValueOnInput(loanAmountInputElement, amount, "setLoanAmountOnInput");
 	}
-	
+
 	public Integer getLoanAmountFromInput() {
 		return Integer.parseInt(getValueFromInput(loanAmountInputElement));
 	}
@@ -140,7 +141,7 @@ public class LoanCalculatorPage {
 	public Boolean setLoanInterestOnInput(float rate) {
 		return setValueOnInput(loanInterestInputElement, rate, "setLoanInterestOnInput");
 	}
-	
+
 	public Float getLoanInterestFromInput() {
 		return Float.parseFloat(getValueFromInput(loanInterestInputElement));
 	}
@@ -169,7 +170,7 @@ public class LoanCalculatorPage {
 
 		return setValueOnInput(loanTenureInputElement, duration, "setLoanTenureOnInput");
 	}
-	
+
 	public Integer getLoanTenureFromInput(TimePeriod timePeriod) {
 		if (timePeriod == TimePeriod.MONTH) {
 			elementUtil.highlightElement(loanTenureMonthToggleElement);
@@ -180,7 +181,7 @@ public class LoanCalculatorPage {
 			loanTenureYearToggleElement.click();
 			elementUtil.undoHighlightElement(loanTenureYearToggleElement);
 		}
-		
+
 		return Integer.parseInt(getValueFromInput(loanTenureInputElement));
 	}
 
@@ -211,7 +212,7 @@ public class LoanCalculatorPage {
 
 		return setValueOnInput(loanFeesInputElement, amount, "setLoanFeesOnInput");
 	}
-	
+
 	public Integer getLoanFeesFromInput() {
 		return Integer.parseInt(getValueFromInput(loanFeesInputElement));
 	}
@@ -226,7 +227,7 @@ public class LoanCalculatorPage {
 
 		return setValueOnInput(emiInputElement, amount, "setEmiOnInput");
 	}
-	
+
 	public Float getEmiFromInput() {
 		return Float.parseFloat(getValueFromInput(emiInputElement));
 	}
@@ -245,7 +246,7 @@ public class LoanCalculatorPage {
 		elementUtil.undoHighlightElement(inputElement);
 		return true;
 	}
-	
+
 	public String getValueFromInput(WebElement inputElement) {
 		if (!elementUtil.scrollToAndVerifyElement(inputElement, scrollableElement))
 			return null;

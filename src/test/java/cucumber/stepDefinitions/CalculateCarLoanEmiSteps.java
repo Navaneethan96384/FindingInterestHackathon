@@ -1,10 +1,11 @@
 package cucumber.stepDefinitions;
 
-import static org.testng.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
 
 import org.openqa.selenium.WebDriver;
 
 import cucumber.hooks.WebDriverHook;
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -16,6 +17,7 @@ import utils.TimePeriod;
 public class CalculateCarLoanEmiSteps {
 	WebDriver driver;
 	EmiCalculatorPage emiCalculatorPage;
+	public static Boolean smokeTestStatus = true;
 
 	@Given("the user is on the emi_calculator page using chrome")
 	public void the_user_is_on_the_emi_calculator_page_using_chrome() throws Exception {
@@ -35,7 +37,7 @@ public class CalculateCarLoanEmiSteps {
 
 	@When("the user clicks on the car_loan tab")
 	public void the_user_clicks_on_the_car_loan_tab() {
-			assertTrue(emiCalculatorPage.clickCarLoanTab());
+		assertTrue(emiCalculatorPage.clickCarLoanTab());
 	}
 
 	@When("the user enters the car loan amount {int}")
@@ -62,21 +64,22 @@ public class CalculateCarLoanEmiSteps {
 	public void I_verify_and_display_the_emi_details() {
 		String[] emiDetails = emiCalculatorPage.getEmiDetails();
 		assertTrue(emiDetails != null);
-		
+
 		Integer monthlyEmiAmount = Integer.parseInt(emiDetails[0].replaceAll(",", ""));
-		
+
 		Integer principalAmount = Integer.parseInt(emiCalculatorPage.getCarLoanAmountAsString());
 		Float interest = Float.parseFloat(emiCalculatorPage.getCarLoanInterestAsString());
 		Integer loanTenureInMonths = Integer.parseInt(emiCalculatorPage.getLoanTenureInMonthsAsString());
-		
+
 		Float monthlyInterestRate = interest / 12 / 100;
-		
-		Integer calculatedMonthlyEmiAmount = (int) (principalAmount * monthlyInterestRate * ((Math.pow(1 + monthlyInterestRate, loanTenureInMonths)) / (Math.pow(1 + monthlyInterestRate, loanTenureInMonths) - 1)));
-	
-		
-		Integer difference =  Math.abs(monthlyEmiAmount - calculatedMonthlyEmiAmount);
+
+		Integer calculatedMonthlyEmiAmount = (int) (principalAmount * monthlyInterestRate
+				* ((Math.pow(1 + monthlyInterestRate, loanTenureInMonths))
+						/ (Math.pow(1 + monthlyInterestRate, loanTenureInMonths) - 1)));
+
+		Integer difference = Math.abs(monthlyEmiAmount - calculatedMonthlyEmiAmount);
 		Integer deviationPercentage = (difference / monthlyEmiAmount) * 100;
-		
+
 		System.out.println();
 		System.out.println("  Car Loan EMI Details: ");
 		System.out.println("  Monthly EMI Amount: " + emiDetails[0]);
@@ -84,17 +87,22 @@ public class CalculateCarLoanEmiSteps {
 		System.out.println("  Total Principal Amount: " + emiDetails[2]);
 		System.out.println("  First Month Interest Amount: " + emiDetails[3]);
 		System.out.println("  First Month Principal Amount: " + emiDetails[4]);
-		
+
 		assertTrue(deviationPercentage < 1);
 		System.out.println();
 		System.out.println("  Calculated Monthly EMI Amount: " + calculatedMonthlyEmiAmount);
 		System.out.println("  Car Loan EMI Details Verified and Validated.");
 		System.out.println();
 	}
-	
+
 	@And("the user navigates to home_loan_calculator page")
-	public void the_user_navigates_to_home_loan_calculator_page() throws Exception
-	{
+	public void the_user_navigates_to_home_loan_calculator_page() throws Exception {
 		assertTrue(emiCalculatorPage.clickHomeLoanEmiCalculatorMenuItem());
+	}
+	
+	public static void assertSmokeTest() throws PendingException
+	{
+		if(!smokeTestStatus)
+		throw new PendingException("Smoke test has failed.");
 	}
 }

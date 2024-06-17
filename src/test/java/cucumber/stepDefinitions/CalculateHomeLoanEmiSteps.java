@@ -1,6 +1,7 @@
 package cucumber.stepDefinitions;
 
-import static org.testng.Assert.assertTrue;
+import static org.junit.Assert.assertTrue;
+import static cucumber.stepDefinitions.CalculateCarLoanEmiSteps.assertSmokeTest;
 
 import org.openqa.selenium.WebDriver;
 
@@ -15,12 +16,13 @@ import utils.PropertiesReader;
 import utils.TimePeriod;
 
 public class CalculateHomeLoanEmiSteps {
-	static int retriesLeft = 3;
+	
 	WebDriver driver;
-	HomeLoanEmiCalculatorPage homeLoanEmiCalculatorPage ;
+	HomeLoanEmiCalculatorPage homeLoanEmiCalculatorPage;
 
 	@Given("the user is on the home_loan_calculator page using chrome")
 	public void the_user_is_on_the_home_loan_calculator_page_using_chrome() throws Exception {
+		assertSmokeTest();
 		String browserName = "chrome";
 		driver = WebDriverHook.getDriver(browserName);
 		driver.get(PropertiesReader.readProperty("homeloanemicalculator.url"));
@@ -29,6 +31,7 @@ public class CalculateHomeLoanEmiSteps {
 
 	@Given("the user is on the home_loan_calculator page using edge")
 	public void the_user_is_on_the_home_loan_calculator_page_using_edge() throws Exception {
+		assertSmokeTest();
 		String browserName = "edge";
 		driver = WebDriverHook.getDriver(browserName);
 		driver.get(PropertiesReader.readProperty("homeloanemicalculator.url"));
@@ -44,9 +47,10 @@ public class CalculateHomeLoanEmiSteps {
 	public void the_user_enters_the_down_payment(Float percent) {
 		assertTrue(homeLoanEmiCalculatorPage.setDownPaymentPercentage(percent));
 	}
-	
+
 	@When("the user enters the home loan interest {float}")
 	public void the_user_enters_the_interest_rate(Float rate) {
+		assertSmokeTest();
 		assertTrue(homeLoanEmiCalculatorPage.setInterestRate(rate));
 	}
 
@@ -64,14 +68,14 @@ public class CalculateHomeLoanEmiSteps {
 	public void I_store_the_generated_year_on_year_loan_details_in_an_excel_format() {
 		String[][] yearOnYearPaymentDetails = homeLoanEmiCalculatorPage.getYearOnYearTableData();
 		assertTrue(yearOnYearPaymentDetails != null);
-		
+
 		ExcelUtil excelUtil = new ExcelUtil();
-		excelUtil.create(PropertiesReader.readProperty("paymentDetailsExcelFile.path"), "yearOnYearPayment", yearOnYearPaymentDetails);
+		excelUtil.create(PropertiesReader.readProperty("paymentDetailsExcelFile.path"), "yearOnYearPayment",
+				yearOnYearPaymentDetails);
 	}
-	
+
 	@And("the user navigates to the loan_calculator page")
-	public void the_user_navigates_to_loan_calculator_page() throws Exception
-	{
+	public void the_user_navigates_to_loan_calculator_page() throws Exception {
 		assertTrue(homeLoanEmiCalculatorPage.clickLoanCalculatorMenuItem());
 	}
 }

@@ -57,7 +57,8 @@ public class HomeLoanEmiCalculatorPage {
 		this.driver = driver;
 		this.browserName = browserName;
 		elementUtil = new ElementUtil(driver);
-		if(!elementUtil.waitUntillLoadedPage()) throw new Exception("Site stuck on loading");
+		if (!elementUtil.waitUntillLoadedPage())
+			throw new Exception("Site stuck on loading");
 		loadElements();
 	}
 
@@ -137,6 +138,7 @@ public class HomeLoanEmiCalculatorPage {
 	}
 
 	public Boolean clickLoanCalculatorMenuItem() throws Exception {
+
 		if (!elementUtil.verifyElement(calculatorMenuElement, Duration.ofSeconds(1))) {
 			if (!elementUtil.verifyElement(navBarTogglerElement))
 				return false;
@@ -154,10 +156,11 @@ public class HomeLoanEmiCalculatorPage {
 			return false;
 		elementUtil.highlightElement(loanCalculatorMenuItemElement);
 		ElementUtil.takeScreenshot(driver, browserName, "clickLoanCalculator");
-		if(!loanCalculatorMenuItemElement.getAttribute("href").equalsIgnoreCase(PropertiesReader.readProperty("loancalculator.url")))
+		if (!loanCalculatorMenuItemElement.getAttribute("href")
+				.equalsIgnoreCase(PropertiesReader.readProperty("loancalculator.url")))
 			throw new Exception("Wrong url exception");
-		loanCalculatorMenuItemElement.click();
 		elementUtil.undoHighlightElement(loanCalculatorMenuItemElement);
+		loanCalculatorMenuItemElement.click();
 		return true;
 	}
 }

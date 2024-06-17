@@ -57,11 +57,12 @@ public class EmiCalculatorPage {
 	private String browserName;
 	private ElementUtil elementUtil;
 
-	public EmiCalculatorPage(WebDriver driver, String browserName) throws Exception{
+	public EmiCalculatorPage(WebDriver driver, String browserName) throws Exception {
 		this.driver = driver;
 		this.browserName = browserName;
 		elementUtil = new ElementUtil(driver);
-		if(!elementUtil.waitUntillLoadedPage()) throw new Exception("Site stuck on loading");
+		if (!elementUtil.waitUntillLoadedPage())
+			throw new Exception("Site stuck on loading");
 		loadElements();
 	}
 
@@ -91,9 +92,8 @@ public class EmiCalculatorPage {
 
 		return true;
 	}
-	
-	public String getCarLoanAmountAsString()
-	{
+
+	public String getCarLoanAmountAsString() {
 		return getValueFromInputAsString(loanAmountInputElement);
 	}
 
@@ -107,9 +107,8 @@ public class EmiCalculatorPage {
 		elementUtil.undoHighlightElement(loanInterestInputElement);
 		return true;
 	}
-	
-	public String getCarLoanInterestAsString()
-	{
+
+	public String getCarLoanInterestAsString() {
 		return getValueFromInputAsString(loanInterestInputElement);
 	}
 
@@ -137,16 +136,15 @@ public class EmiCalculatorPage {
 		elementUtil.undoHighlightElement(loanTenureInputElement);
 		return true;
 	}
-	
-	public String getLoanTenureInMonthsAsString()
-	{
+
+	public String getLoanTenureInMonthsAsString() {
 		elementUtil.highlightElement(loanTenureMonthToggleElement);
 		loanTenureMonthToggleElement.click();
 		elementUtil.undoHighlightElement(loanTenureMonthToggleElement);
-		
+
 		return getValueFromInputAsString(loanTenureInputElement);
 	}
-	
+
 	public String getValueFromInputAsString(WebElement element) {
 		elementUtil.highlightElement(element);
 		String valueOnInputElement = element.getAttribute("value").replaceAll(",", "");
@@ -188,6 +186,7 @@ public class EmiCalculatorPage {
 	}
 
 	public Boolean clickHomeLoanEmiCalculatorMenuItem() throws Exception {
+
 		if (!elementUtil.verifyElement(calculatorMenuElement, Duration.ofSeconds(1))) {
 			if (!elementUtil.verifyElement(navBarTogglerElement))
 				return false;
@@ -206,10 +205,11 @@ public class EmiCalculatorPage {
 			return false;
 		elementUtil.highlightElement(homeLoanEmiCalculatorMenuItemElement);
 		ElementUtil.takeScreenshot(driver, browserName, "clickHomeLoanEmiCalculator");
-		if(!homeLoanEmiCalculatorMenuItemElement.getAttribute("href").equalsIgnoreCase(PropertiesReader.readProperty("homeloanemicalculator.url")))
+		if (!homeLoanEmiCalculatorMenuItemElement.getAttribute("href")
+				.equalsIgnoreCase(PropertiesReader.readProperty("homeloanemicalculator.url")))
 			throw new Exception("Wrong url exception");
-		homeLoanEmiCalculatorMenuItemElement.click();
 		elementUtil.undoHighlightElement(homeLoanEmiCalculatorMenuItemElement);
+		homeLoanEmiCalculatorMenuItemElement.click();
 		return true;
 	}
 }
