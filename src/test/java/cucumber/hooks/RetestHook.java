@@ -2,7 +2,7 @@ package cucumber.hooks;
 
 import java.util.HashMap;
 
-import cucumber.stepDefinitions.CalculateCarLoanEmiSteps;
+import cucumber.runners.TestRunner;
 import io.cucumber.core.cli.Main;
 import io.cucumber.java.After;
 import io.cucumber.java.Scenario;
@@ -21,7 +21,7 @@ public class RetestHook {
 				Integer retriesLeft = retryLimit.get(failedScenarioTagName);
 				if (retriesLeft == 0) {
 					if (failedScenarioTagName.toLowerCase().contains("smoke")) {
-						CalculateCarLoanEmiSteps.smokeTestStatus = false;
+						TestRunner.smokeTestStatus = false;
 						System.out.println("  Smoke test failed, aborting further tests.");
 					} else
 						System.out.println("  Retest limit reached, Skipping scenario.");

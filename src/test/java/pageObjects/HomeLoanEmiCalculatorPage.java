@@ -137,7 +137,7 @@ public class HomeLoanEmiCalculatorPage {
 		return tableData;
 	}
 
-	public Boolean clickLoanCalculatorMenuItem() throws Exception {
+	public Boolean clickLoanCalculatorMenuItem() throws Exception { 
 
 		if (!elementUtil.verifyElement(calculatorMenuElement, Duration.ofSeconds(1))) {
 			if (!elementUtil.verifyElement(navBarTogglerElement))

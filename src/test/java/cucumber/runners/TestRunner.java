@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 
 import java.nio.file.Files;
 
+import io.cucumber.java.PendingException;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import seleniumUtils.DriverFactory;
@@ -18,6 +19,14 @@ import utils.PropertiesReader;
 @CucumberOptions(features = "src/test/resources/features", glue = "cucumber", plugin = { "pretty",
 		"html:target/cucumber-reports/cucumber-report.html", "json:target/cucumber-reports/CucumberTestReport.json" })
 public class TestRunner {
+	
+	public static Boolean smokeTestStatus = true;
+	
+	public static void assertSmokeTest() throws PendingException
+	{
+		if(!smokeTestStatus)
+		throw new PendingException("Smoke test has failed.");
+	}
 
 	@AfterClass
 	public static void openHTMLReports() {
@@ -31,6 +40,9 @@ public class TestRunner {
 
 			Files.createDirectories(reportsDirectory.toPath());
 			Files.createDirectories(retestReportsDirectory.toPath());
+			
+			System.out.println();
+			System.out.println("Test Report(s): ");
 
 			if (reportsDirectory.isDirectory()) {
 				for (File file : reportsDirectory.listFiles()) {

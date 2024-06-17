@@ -1,7 +1,7 @@
 package cucumber.stepDefinitions;
 
 import static org.junit.Assert.assertTrue;
-import static cucumber.stepDefinitions.CalculateCarLoanEmiSteps.assertSmokeTest;
+import static cucumber.runners.TestRunner.assertSmokeTest;
 
 import org.openqa.selenium.WebDriver;
 

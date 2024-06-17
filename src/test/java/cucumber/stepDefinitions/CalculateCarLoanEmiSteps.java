@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import org.openqa.selenium.WebDriver;
 
 import cucumber.hooks.WebDriverHook;
-import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -17,22 +16,21 @@ import utils.TimePeriod;
 public class CalculateCarLoanEmiSteps {
 	WebDriver driver;
 	EmiCalculatorPage emiCalculatorPage;
-	public static Boolean smokeTestStatus = true;
 
 	@Given("the user is on the emi_calculator page using chrome")
 	public void the_user_is_on_the_emi_calculator_page_using_chrome() throws Exception {
-
-		driver = WebDriverHook.getDriver("chrome");
+		String browserName = "chrome";
+		driver = WebDriverHook.getDriver(browserName);
 		driver.get(PropertiesReader.readProperty("emicalculator.url"));
-		emiCalculatorPage = new EmiCalculatorPage(driver, "chrome");
+		emiCalculatorPage = new EmiCalculatorPage(driver, browserName);
 	}
 
 	@Given("the user is on the emi_calculator page using edge")
 	public void the_user_is_on_the_emi_calculator_page_using_edge() throws Exception {
-
-		driver = WebDriverHook.getDriver("edge");
+		String browserName = "edge";
+		driver = WebDriverHook.getDriver(browserName);
 		driver.get(PropertiesReader.readProperty("emicalculator.url"));
-		emiCalculatorPage = new EmiCalculatorPage(driver, "edge");
+		emiCalculatorPage = new EmiCalculatorPage(driver, browserName);
 	}
 
 	@When("the user clicks on the car_loan tab")
@@ -98,11 +96,5 @@ public class CalculateCarLoanEmiSteps {
 	@And("the user navigates to home_loan_calculator page")
 	public void the_user_navigates_to_home_loan_calculator_page() throws Exception {
 		assertTrue(emiCalculatorPage.clickHomeLoanEmiCalculatorMenuItem());
-	}
-	
-	public static void assertSmokeTest() throws PendingException
-	{
-		if(!smokeTestStatus)
-		throw new PendingException("Smoke test has failed.");
 	}
 }
