@@ -11,6 +11,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -160,7 +161,7 @@ public class ElementUtil {
 		}
 	}
 
-	public String[][] readTableRows(List<WebElement> tableRows) {
+	public String[][] readTableRows(List<WebElement> tableRows) throws StaleElementReferenceException {
 		ElementUtil elementUtil = new ElementUtil(driver);
 		WebElement firstRowElement = tableRows.get(0);
 		List<WebElement> firstRowCellElements = elementUtil.findAndVerifyElements(firstRowElement,

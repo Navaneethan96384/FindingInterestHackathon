@@ -268,10 +268,10 @@ public class LoanCalculatorPage {
 				sliderRightBoundElement = stepElements.get(stepElements.size() - 1);
 
 		elementUtil.highlightElement(sliderLeftBoundElement);
-		sliderLeftBoundString = sliderLeftBoundElement.getText().trim();
-		elementUtil.undoHighlightElement(sliderLeftBoundElement);
 		elementUtil.highlightElement(sliderRightBoundElement);
+		sliderLeftBoundString = sliderLeftBoundElement.getText().trim();
 		sliderRightBoundString = sliderRightBoundElement.getText().trim();
+		elementUtil.undoHighlightElement(sliderLeftBoundElement);
 		elementUtil.undoHighlightElement(sliderRightBoundElement);
 
 		Float[] sliderBoundsFloats = { Float.parseFloat(sliderLeftBoundString.split("L")[0]),

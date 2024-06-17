@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
@@ -130,10 +131,20 @@ public class HomeLoanEmiCalculatorPage {
 		if (!elementUtil.scrollToAndVerifyElement(tableElement, scrollableElement))
 			return null;
 
+		Integer retriesLeft = 10;
+		String tableData[][] = null;
 		elementUtil.highlightElement(tableElement);
-		// To avoid stale element exception.
-		yearOnYearTableRowElements = elementUtil.findAndVerifyElements(driver, By.xpath("//tr[contains(@class,'yearlypaymentdetails')] | //table[@class='noextras']/tbody/tr[1]"));
-		String tableData[][] = elementUtil.readTableRows(yearOnYearTableRowElements);
+		
+		while(retriesLeft-- != 0)
+		{
+			try {
+				tableData = elementUtil.readTableRows(yearOnYearTableRowElements);
+				break;
+			} catch (StaleElementReferenceException staleElementReferenceException) {
+				if(retriesLeft == 0) throw staleElementReferenceException;
+			}
+		}
+		
 		ElementUtil.takeScreenshot(driver, browserName, "getYearOnYearTableData");
 		elementUtil.undoHighlightElement(tableElement);
 		return tableData;
