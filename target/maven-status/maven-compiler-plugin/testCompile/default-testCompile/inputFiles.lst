@@ -12,6 +12,7 @@ C:\Users\shakt\eclipse-workspace\FindingInterestHackathon\src\test\java\cucumber
 C:\Users\shakt\eclipse-workspace\FindingInterestHackathon\src\test\java\seleniumUtils\ScrollUntillElementFound.java
 C:\Users\shakt\eclipse-workspace\FindingInterestHackathon\src\test\java\cucumber\stepDefinitions\CalculateHomeLoanEmiSteps.java
 C:\Users\shakt\eclipse-workspace\FindingInterestHackathon\src\test\java\utils\PropertiesReader.java
+C:\Users\shakt\eclipse-workspace\FindingInterestHackathon\src\test\java\cucumber\hooks\CleanUpHook.java
 C:\Users\shakt\eclipse-workspace\FindingInterestHackathon\src\test\java\cucumber\runners\TestRunner.java
 C:\Users\shakt\eclipse-workspace\FindingInterestHackathon\src\test\java\cucumber\stepDefinitions\PerformUITestsOnLoanCalculatorSteps.java
 C:\Users\shakt\eclipse-workspace\FindingInterestHackathon\src\test\java\utils\TimePeriod.java
