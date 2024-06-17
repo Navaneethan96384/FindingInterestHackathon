@@ -16,7 +16,7 @@
 #""
 ## (Comments)
 #Sample Feature Definition Template
-@regression2
+@regression2 @regression
 Feature: Calculate Loan Information
 
   Scenario Outline: Performing UI tests on various loan tools

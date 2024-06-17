@@ -1,7 +1,6 @@
 package cucumber.stepDefinitions;
 
 import static org.junit.Assert.assertTrue;
-import static cucumber.runners.TestRunner.assertSmokeTest;
 
 import org.openqa.selenium.WebDriver;
 
@@ -20,7 +19,7 @@ public class PerformUITestsOnLoanCalculatorSteps {
 
 	@Given("the user is on the loan_calculator page using chrome")
 	public void the_user_is_on_the_loan_calculator_page_using_chrome() throws Exception {
-		assertSmokeTest();
+
 		String browserName = "chrome";
 		driver = WebDriverHook.getDriver(browserName);
 		driver.get(PropertiesReader.readProperty("loancalculator.url"));
@@ -29,7 +28,7 @@ public class PerformUITestsOnLoanCalculatorSteps {
 
 	@Given("the user is on the loan_calculator page using edge")
 	public void the_user_is_on_the_loan_calculator_page_using_edge() throws Exception {
-		assertSmokeTest();
+
 		String browserName = "edge";
 		driver = WebDriverHook.getDriver(browserName);
 		driver.get(PropertiesReader.readProperty("loancalculator.url"));

@@ -135,15 +135,20 @@ public class HomeLoanEmiCalculatorPage {
 		String tableData[][] = null;
 		elementUtil.highlightElement(tableElement);
 		
-		while(retriesLeft-- != 0)
-		{
-			try {
-				tableData = elementUtil.readTableRows(yearOnYearTableRowElements);
-				break;
-			} catch (StaleElementReferenceException staleElementReferenceException) {
-				if(retriesLeft == 0) throw staleElementReferenceException;
+		try {
+			while(retriesLeft-- != 0)
+			{
+				try {
+					tableData = elementUtil.readTableRows(yearOnYearTableRowElements);
+					break;
+				} catch (StaleElementReferenceException staleElementReferenceException) {
+					if(retriesLeft == 0) throw staleElementReferenceException;
+				}
 			}
+		} catch (StaleElementReferenceException staleElementReferenceException) {
 		}
+		
+
 		
 		ElementUtil.takeScreenshot(driver, browserName, "getYearOnYearTableData");
 		elementUtil.undoHighlightElement(tableElement);

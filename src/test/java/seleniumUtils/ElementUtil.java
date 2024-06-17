@@ -72,7 +72,7 @@ public class ElementUtil {
 	// Scroll untill an element is found on the scrollable element.
 	public boolean scrollToElement(WebElement element, WebElement scrollableElement) {
 		waitUntillLoadedPage();
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 		try {
 			wait.until(new ScrollUntillElementFound(element, scrollableElement));
 			return true;

@@ -3,6 +3,7 @@ package cucumber.hooks;
 import java.io.File;
 
 import io.cucumber.java.BeforeAll;
+import utils.LogUtil;
 import utils.PropertiesReader;
 
 public class CleanUpHook {

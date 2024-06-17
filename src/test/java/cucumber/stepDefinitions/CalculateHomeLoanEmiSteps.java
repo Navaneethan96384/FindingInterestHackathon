@@ -1,7 +1,6 @@
 package cucumber.stepDefinitions;
 
 import static org.junit.Assert.assertTrue;
-import static cucumber.runners.TestRunner.assertSmokeTest;
 
 import org.openqa.selenium.WebDriver;
 
@@ -16,13 +15,13 @@ import utils.PropertiesReader;
 import utils.TimePeriod;
 
 public class CalculateHomeLoanEmiSteps {
-	
+
 	WebDriver driver;
 	HomeLoanEmiCalculatorPage homeLoanEmiCalculatorPage;
 
 	@Given("the user is on the home_loan_calculator page using chrome")
 	public void the_user_is_on_the_home_loan_calculator_page_using_chrome() throws Exception {
-		assertSmokeTest();
+
 		String browserName = "chrome";
 		driver = WebDriverHook.getDriver(browserName);
 		driver.get(PropertiesReader.readProperty("homeloanemicalculator.url"));
@@ -31,7 +30,7 @@ public class CalculateHomeLoanEmiSteps {
 
 	@Given("the user is on the home_loan_calculator page using edge")
 	public void the_user_is_on_the_home_loan_calculator_page_using_edge() throws Exception {
-		assertSmokeTest();
+
 		String browserName = "edge";
 		driver = WebDriverHook.getDriver(browserName);
 		driver.get(PropertiesReader.readProperty("homeloanemicalculator.url"));
@@ -50,7 +49,7 @@ public class CalculateHomeLoanEmiSteps {
 
 	@When("the user enters the home loan interest {float}")
 	public void the_user_enters_the_interest_rate(Float rate) {
-		assertSmokeTest();
+
 		assertTrue(homeLoanEmiCalculatorPage.setInterestRate(rate));
 	}
 

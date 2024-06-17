@@ -16,7 +16,7 @@
 #""
 ## (Comments)
 #Sample Feature Definition Template
-@regression
+@regression1 @regression
 Feature: Calculate Detailed Home Loan Information Annually
 
   Scenario Outline: Calculating detailed home loan information with various inputs
@@ -31,4 +31,4 @@ Feature: Calculate Detailed Home Loan Information Annually
     Examples: 
       | browser  | amount   | percent | rate | duration  | period  |
 			| chrome   | 15000000 | 0 			| 9    | 20        | year    |
-#			| edge     | 7500000  | 0 			| 9.5  | 20        | year    |
+			| edge     | 7500000  | 0 			| 9.5  | 20        | year    |
