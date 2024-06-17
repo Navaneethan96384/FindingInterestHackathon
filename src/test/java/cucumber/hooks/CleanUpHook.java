@@ -3,7 +3,6 @@ package cucumber.hooks;
 import java.io.File;
 
 import io.cucumber.java.BeforeAll;
-import utils.LogUtil;
 import utils.PropertiesReader;
 
 public class CleanUpHook {
@@ -18,19 +17,19 @@ public class CleanUpHook {
 				}
 			}
 		}
-
-		File cucumberReportsDirectory = new File(PropertiesReader.readProperty("cucumber.reports.path"));
-		if (cucumberReportsDirectory.isDirectory()) {
-			for (File file : cucumberReportsDirectory.listFiles()) {
-				if (file.isFile()) {
-					file.delete();
-				}
-			}
-		}
-
-		File cucumberRetestReportsDirectory = new File(PropertiesReader.readProperty("cucumber.retest-reports.path"));
-		if (cucumberRetestReportsDirectory.isDirectory()) {
-			for (File file : cucumberRetestReportsDirectory.listFiles()) {
+		
+		deleteDirectoryContents(PropertiesReader.readProperty("screenshots.path"));
+		deleteDirectoryContents(PropertiesReader.readProperty("cucumber.reports.path"));
+		deleteDirectoryContents(PropertiesReader.readProperty("cucumber.retest-reports.path"));
+		deleteDirectoryContents(PropertiesReader.readProperty("cucumber.retest-reports.path"));
+		deleteDirectoryContents("logs");
+	}
+	
+	public static void deleteDirectoryContents(String path)
+	{
+		File directory = new File(path);
+		if (directory.isDirectory()) {
+			for (File file : directory.listFiles()) {
 				if (file.isFile()) {
 					file.delete();
 				}

@@ -2,7 +2,7 @@ package utils;
 
 import java.io.PrintStream;
 
-public class ConsoleViewControl {
+public class Utility {
 
 	static PrintStream originalOut = System.out;
 	static PrintStream originalErr = System.err;
@@ -21,5 +21,9 @@ public class ConsoleViewControl {
 
 		System.setOut(dummyStream);
 		System.setErr(dummyStream);
+	}
+
+	public static String getCurrentMethodName() {
+		return Thread.currentThread().getStackTrace()[2].getMethodName();
 	}
 }

@@ -1,61 +1,16 @@
-2024-06-18 01:24:04,241 [main] INFO  utils.LogUtil - Executing Scenario: Calculating car loan emi with various inputs
-2024-06-18 01:24:11,642 [main] INFO  utils.LogUtil - Step Success: Calculating car loan emi with various inputs, Step line at 33
-2024-06-18 01:24:12,409 [main] INFO  utils.LogUtil - Step Success: Calculating car loan emi with various inputs, Step line at 33
-2024-06-18 01:24:13,077 [main] INFO  utils.LogUtil - Step Success: Calculating car loan emi with various inputs, Step line at 33
-2024-06-18 01:24:13,633 [main] INFO  utils.LogUtil - Step Success: Calculating car loan emi with various inputs, Step line at 33
-2024-06-18 01:24:14,402 [main] INFO  utils.LogUtil - Step Success: Calculating car loan emi with various inputs, Step line at 33
-2024-06-18 01:24:15,782 [main] INFO  utils.LogUtil - Step Success: Calculating car loan emi with various inputs, Step line at 33
-2024-06-18 01:24:16,444 [main] INFO  utils.LogUtil - Step Success: Calculating car loan emi with various inputs, Step line at 33
-2024-06-18 01:24:17,181 [main] INFO  utils.LogUtil - Executing Scenario: Calculating car loan emi with various inputs
-2024-06-18 01:24:21,459 [main] INFO  utils.LogUtil - Step Success: Calculating car loan emi with various inputs, Step line at 34
-2024-06-18 01:24:22,111 [main] INFO  utils.LogUtil - Step Success: Calculating car loan emi with various inputs, Step line at 34
-2024-06-18 01:24:22,698 [main] INFO  utils.LogUtil - Step Success: Calculating car loan emi with various inputs, Step line at 34
-2024-06-18 01:24:23,290 [main] INFO  utils.LogUtil - Step Success: Calculating car loan emi with various inputs, Step line at 34
-2024-06-18 01:24:24,097 [main] INFO  utils.LogUtil - Step Success: Calculating car loan emi with various inputs, Step line at 34
-2024-06-18 01:24:25,461 [main] INFO  utils.LogUtil - Step Success: Calculating car loan emi with various inputs, Step line at 34
-2024-06-18 01:24:27,729 [main] INFO  utils.LogUtil - Step Success: Calculating car loan emi with various inputs, Step line at 34
-2024-06-18 01:24:29,050 [main] INFO  utils.LogUtil - Executing Scenario: Calculating detailed home loan information with various inputs
-2024-06-18 01:24:34,026 [main] INFO  utils.LogUtil - Step Success: Calculating detailed home loan information with various inputs, Step line at 33
-2024-06-18 01:24:34,608 [main] INFO  utils.LogUtil - Step Success: Calculating detailed home loan information with various inputs, Step line at 33
-2024-06-18 01:24:35,213 [main] INFO  utils.LogUtil - Step Success: Calculating detailed home loan information with various inputs, Step line at 33
-2024-06-18 01:24:35,725 [main] INFO  utils.LogUtil - Step Success: Calculating detailed home loan information with various inputs, Step line at 33
-2024-06-18 01:24:36,465 [main] INFO  utils.LogUtil - Step Success: Calculating detailed home loan information with various inputs, Step line at 33
-2024-06-18 01:24:39,523 [main] INFO  utils.LogUtil - Step Success: Calculating detailed home loan information with various inputs, Step line at 33
-2024-06-18 01:24:40,306 [main] INFO  utils.LogUtil - Step Success: Calculating detailed home loan information with various inputs, Step line at 33
-2024-06-18 01:24:40,976 [main] INFO  utils.LogUtil - Executing Scenario: Calculating detailed home loan information with various inputs
-2024-06-18 01:24:45,063 [main] INFO  utils.LogUtil - Step Success: Calculating detailed home loan information with various inputs, Step line at 34
-2024-06-18 01:24:45,719 [main] INFO  utils.LogUtil - Step Success: Calculating detailed home loan information with various inputs, Step line at 34
-2024-06-18 01:24:46,329 [main] INFO  utils.LogUtil - Step Success: Calculating detailed home loan information with various inputs, Step line at 34
-2024-06-18 01:24:46,892 [main] INFO  utils.LogUtil - Step Success: Calculating detailed home loan information with various inputs, Step line at 34
-2024-06-18 01:24:47,663 [main] INFO  utils.LogUtil - Step Success: Calculating detailed home loan information with various inputs, Step line at 34
-2024-06-18 01:24:50,064 [main] INFO  utils.LogUtil - Step Success: Calculating detailed home loan information with various inputs, Step line at 34
-2024-06-18 01:24:52,371 [main] INFO  utils.LogUtil - Step Success: Calculating detailed home loan information with various inputs, Step line at 34
-2024-06-18 01:24:53,666 [main] INFO  utils.LogUtil - Executing Scenario: Performing UI tests on various loan tools
-2024-06-18 01:24:56,670 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:24:57,448 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:24:58,098 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:24:58,683 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:24:59,549 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:00,219 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:00,946 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:01,596 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:02,631 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:03,250 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:03,817 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:04,481 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:04,944 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:05,736 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:06,353 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:07,033 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:07,727 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:08,839 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:09,513 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:09,989 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:10,565 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:11,214 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:11,688 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:12,264 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:12,849 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:13,435 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:14,022 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
-2024-06-18 01:25:14,593 [main] INFO  utils.LogUtil - Step Success: Performing UI tests on various loan tools, Step line at 56
+2024-06-18 03:21:21,675 [main] INFO  utils.LogUtil - Executing Scenario: Calculating car loan emi with various inputs
+2024-06-18 03:21:26,300 [main] INFO  utils.LogUtil - Step Success: the_user_is_on_the_emi_calculator_page_using_chrome, PASSED
+2024-06-18 03:21:26,981 [main] INFO  utils.LogUtil - Step Success: the_user_clicks_on_the_car_loan_tab, PASSED
+2024-06-18 03:21:27,612 [main] INFO  utils.LogUtil - Step Success: the_user_enters_the_car_loan_amount, PASSED
+2024-06-18 03:21:28,168 [main] INFO  utils.LogUtil - Step Success: the_user_enters_the_loan_interest, PASSED
+2024-06-18 03:21:28,864 [main] INFO  utils.LogUtil - Step Success: the_user_enters_the_loan_tenure_year, PASSED
+2024-06-18 03:21:30,276 [main] INFO  utils.LogUtil - Step Success: I_verify_and_display_the_emi_details, PASSED
+2024-06-18 03:21:31,026 [main] INFO  utils.LogUtil - Step Success: the_user_navigates_to_home_loan_calculator_page, PASSED
+2024-06-18 03:21:31,735 [main] INFO  utils.LogUtil - Executing Scenario: Calculating car loan emi with various inputs
+2024-06-18 03:21:36,464 [main] INFO  utils.LogUtil - Step Success: the_user_is_on_the_emi_calculator_page_using_edge, PASSED
+2024-06-18 03:21:37,214 [main] INFO  utils.LogUtil - Step Success: the_user_clicks_on_the_car_loan_tab, PASSED
+2024-06-18 03:21:37,864 [main] INFO  utils.LogUtil - Step Success: the_user_enters_the_car_loan_amount, PASSED
+2024-06-18 03:21:38,485 [main] INFO  utils.LogUtil - Step Success: the_user_enters_the_loan_interest, PASSED
+2024-06-18 03:21:39,352 [main] INFO  utils.LogUtil - Step Success: the_user_enters_the_loan_tenure_year, PASSED
+2024-06-18 03:21:40,758 [main] INFO  utils.LogUtil - Step Success: I_verify_and_display_the_emi_details, PASSED
+2024-06-18 03:21:42,950 [main] INFO  utils.LogUtil - Step Success: the_user_navigates_to_home_loan_calculator_page, PASSED

@@ -7,6 +7,9 @@ import io.cucumber.java.Scenario;
 import utils.LogUtil;
 
 public class Log4jHook {
+	
+	public static String currentlyExecutingStepName;
+	
 	@BeforeAll
 	public static void setUp()
 	{
@@ -23,8 +26,8 @@ public class Log4jHook {
 	public static void logScenarioStep(Scenario scenario)
 	{
 		if(scenario.isFailed())
-			LogUtil.error("Error: " + scenario.getName() + ", Step line at " + scenario.getLine());
+			LogUtil.error("Error at step: " + currentlyExecutingStepName + ", " + scenario.getStatus());
 		else
-			LogUtil.info("Step Success: " + scenario.getName() + ", Step line at " + scenario.getLine());
+			LogUtil.info("Step Success: " + currentlyExecutingStepName + ", " + scenario.getStatus());
 	}
 }

@@ -1,16 +1,13 @@
 package cucumber.runners;
 
 import java.io.File;
+import java.nio.file.Files;
 
 import org.junit.AfterClass;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
-import java.nio.file.Files;
-
-import io.cucumber.java.AfterAll;
-import io.cucumber.java.PendingException;
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 import seleniumUtils.DriverFactory;
