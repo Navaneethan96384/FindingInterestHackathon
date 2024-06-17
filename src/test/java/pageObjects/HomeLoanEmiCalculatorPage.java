@@ -131,6 +131,8 @@ public class HomeLoanEmiCalculatorPage {
 			return null;
 
 		elementUtil.highlightElement(tableElement);
+		// To avoid stale element exception.
+		yearOnYearTableRowElements = elementUtil.findAndVerifyElements(driver, By.xpath("//tr[contains(@class,'yearlypaymentdetails')] | //table[@class='noextras']/tbody/tr[1]"));
 		String tableData[][] = elementUtil.readTableRows(yearOnYearTableRowElements);
 		ElementUtil.takeScreenshot(driver, browserName, "getYearOnYearTableData");
 		elementUtil.undoHighlightElement(tableElement);
