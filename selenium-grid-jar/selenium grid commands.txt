@@ -1,3 +1,10 @@
-java -jar selenium-server-4.21.0.jar hub
+// For Hub
+java -jar selenium-server.jar hub
 
-java -jar selenium-server-4.21.0.jar node --detect-drivers true --publish-events tcp://localhost:4442 --subscribe-events tcp://localhost:4443
+
+// For Node
+java -jar selenium-server.jar node --selenium-manager true --publish-events tcp://localhost:4442 --subscribe-events tcp://localhost:4443
+
+// Or
+
+java -jar selenium-server.jar node --selenium-manager true --hub http://localhost:4444

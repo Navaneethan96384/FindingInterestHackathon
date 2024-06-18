@@ -20,9 +20,10 @@ public class RegressionRunner {
 
 	@AfterClass
 	public static void openHTMLReports() {
+		if(PropertiesReader.readProperty("selenium.launch.mode").equalsIgnoreCase("local"))
 		try {
 			WebDriver driver = DriverFactory
-					.createDriver(PropertiesReader.readProperty("preferred-browser-for-reports.name"));
+					.createDriver(PropertiesReader.readProperty("preferred-browser.name"));
 			JavascriptExecutor jExecutor = (JavascriptExecutor) driver;
 
 			File reportsDirectory = new File(PropertiesReader.readProperty("cucumber.reports.path"));

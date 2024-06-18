@@ -152,7 +152,7 @@ public class LoanCalculatorPage {
 	}
 
 	public Boolean setLoanTenureOnInput(int duration, TimePeriod timePeriod) {
-		if (!elementUtil.scrollToAndVerifyElement(loanTenureInputElement, scrollableElement))
+		if (!elementUtil.verifyElement(loanTenureInputElement))
 			return false;
 		if (!elementUtil.verifyElement(loanTenureMonthToggleElement))
 			return false;
@@ -187,7 +187,7 @@ public class LoanCalculatorPage {
 	}
 
 	public Float[] getLoanTenureFromSlider(TimePeriod timePeriod) {
-		if (!elementUtil.scrollToAndVerifyElement(loanTenureInputElement, scrollableElement))
+		if (!elementUtil.verifyElement(loanTenureInputElement))
 			return null;
 		if (!elementUtil.verifyElement(loanTenureMonthToggleElement))
 			return null;
@@ -208,9 +208,6 @@ public class LoanCalculatorPage {
 	}
 
 	public Boolean setLoanFeesOnInput(int amount) {
-		if (!elementUtil.scrollToAndVerifyElement(loanFeesInputElement, scrollableElement))
-			return false;
-
 		return setValueOnInput(loanFeesInputElement, amount, "setLoanFeesOnInput");
 	}
 
@@ -249,7 +246,7 @@ public class LoanCalculatorPage {
 	}
 
 	public String getValueFromInput(WebElement inputElement) {
-		if (!elementUtil.scrollToAndVerifyElement(inputElement, scrollableElement))
+		if (!elementUtil.verifyElement(inputElement))
 			return null;
 
 		elementUtil.highlightElement(inputElement);
@@ -259,7 +256,7 @@ public class LoanCalculatorPage {
 	}
 
 	public Float[] getSliderDetails(WebElement sliderElement, List<WebElement> stepElements, String methodName) {
-		if (!elementUtil.scrollToAndVerifyElement(sliderElement, scrollableElement))
+		if (!elementUtil.verifyElement(sliderElement))
 			return null;
 		if (!elementUtil.verifyElement(stepElements.get(0)))
 			return null;

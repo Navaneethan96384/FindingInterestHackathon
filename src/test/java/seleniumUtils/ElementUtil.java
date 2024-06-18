@@ -187,7 +187,6 @@ public class ElementUtil {
 	}
 
 	public void undoHighlightElement(WebElement element) {
-		sleep(50);
 		jExecutor.executeScript("arguments[0].style.border='0px solid red'", element);
 	}
 
