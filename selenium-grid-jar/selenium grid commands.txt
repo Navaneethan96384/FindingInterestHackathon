@@ -1,0 +1,3 @@
+java -jar selenium-server-4.21.0.jar hub
+
+java -jar selenium-server-4.21.0.jar node --detect-drivers true --publish-events tcp://localhost:4442 --subscribe-events tcp://localhost:4443

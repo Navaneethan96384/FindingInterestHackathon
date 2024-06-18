@@ -126,36 +126,43 @@ public class HomeLoanEmiCalculatorPage {
 	}
 
 	public String[][] getYearOnYearTableData() {
+		yearOnYearTableRowElements = elementUtil.findAndVerifyElements(driver, By.xpath("//tr[contains(@class,'yearlypaymentdetails')] | //table[@class='noextras']/tbody/tr[1]"));
+		if (yearOnYearTableRowElements == null)
+			return null;
+
 		WebElement tableElement = yearOnYearTableRowElements.get(0)
 				.findElement(By.xpath("./ancestor::div[@id='paymentschedule']"));
+
 		if (!elementUtil.scrollToAndVerifyElement(tableElement, scrollableElement))
 			return null;
 
 		Integer retriesLeft = 10;
 		String tableData[][] = null;
 		elementUtil.highlightElement(tableElement);
-		
+
 		try {
-			while(retriesLeft-- != 0)
-			{
+			while (retriesLeft-- != 0) {
+				ElementUtil.sleep(500);
 				try {
 					tableData = elementUtil.readTableRows(yearOnYearTableRowElements);
+					System.out.println("  Yearly payment details excel file created.");
 					break;
 				} catch (StaleElementReferenceException staleElementReferenceException) {
-					if(retriesLeft == 0) throw staleElementReferenceException;
+					System.out.println("  Caught stale element exception, Retrying attempt #" + (10 - retriesLeft));
+					if (retriesLeft == 0)
+						throw staleElementReferenceException;
 				}
 			}
 		} catch (StaleElementReferenceException staleElementReferenceException) {
+			throw staleElementReferenceException;
 		}
-		
 
-		
 		ElementUtil.takeScreenshot(driver, browserName, "getYearOnYearTableData");
 		elementUtil.undoHighlightElement(tableElement);
 		return tableData;
 	}
 
-	public Boolean clickLoanCalculatorMenuItem() throws Exception { 
+	public Boolean clickLoanCalculatorMenuItem() throws Exception {
 
 		if (!elementUtil.verifyElement(calculatorMenuElement, Duration.ofSeconds(1))) {
 			if (!elementUtil.verifyElement(navBarTogglerElement))

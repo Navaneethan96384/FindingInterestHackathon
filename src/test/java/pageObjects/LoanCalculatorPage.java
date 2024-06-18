@@ -281,9 +281,7 @@ public class LoanCalculatorPage {
 			sliderBoundsFloats[1] *= 100000;
 		}
 
-		elementUtil.highlightElement(sliderElement);
 		String slidePercentageString = sliderElement.getAttribute("style");
-		elementUtil.undoHighlightElement(sliderElement);
 		Float slidePercentage = Float.parseFloat(slidePercentageString.split("[: %]+")[1]);
 
 		return new Float[] { sliderBoundsFloats[0], sliderBoundsFloats[1], slidePercentage };

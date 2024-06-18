@@ -183,10 +183,10 @@ public class ElementUtil {
 	// Highlights an element in red.
 	public void highlightElement(WebElement element) {
 		jExecutor.executeScript("arguments[0].style.border='4px solid red'", element);
-		sleep(50);
 	}
 
 	public void undoHighlightElement(WebElement element) {
+		sleep(50);
 		jExecutor.executeScript("arguments[0].style.border='0px solid red'", element);
 	}
 

@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 import org.openqa.selenium.WebDriver;
 
 import cucumber.hooks.Log4jHook;
-import cucumber.hooks.WebDriverHook;
+import cucumber.hooks.SeleniumDriverHook;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -23,7 +23,7 @@ public class CalculateCarLoanEmiSteps {
 	public void the_user_is_on_the_emi_calculator_page_using_chrome() throws Exception {
 		Log4jHook.currentlyExecutingStepName = Utility.getCurrentMethodName();
 		String browserName = "chrome";
-		driver = WebDriverHook.getDriver(browserName);
+		driver = SeleniumDriverHook.getDriver(browserName);
 		driver.get(PropertiesReader.readProperty("emicalculator.url"));
 		emiCalculatorPage = new EmiCalculatorPage(driver, browserName);
 	}
@@ -32,7 +32,7 @@ public class CalculateCarLoanEmiSteps {
 	public void the_user_is_on_the_emi_calculator_page_using_edge() throws Exception {
 		Log4jHook.currentlyExecutingStepName = Utility.getCurrentMethodName();
 		String browserName = "edge";
-		driver = WebDriverHook.getDriver(browserName);
+		driver = SeleniumDriverHook.getDriver(browserName);
 		driver.get(PropertiesReader.readProperty("emicalculator.url"));
 		emiCalculatorPage = new EmiCalculatorPage(driver, browserName);
 	}
