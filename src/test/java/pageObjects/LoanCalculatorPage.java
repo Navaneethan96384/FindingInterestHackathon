@@ -83,6 +83,7 @@ public class LoanCalculatorPage {
 	public LoanCalculatorPage(WebDriver driver, String browserName) throws Exception {
 		this.driver = driver;
 		this.browserName = browserName;
+		driver.manage().window().maximize();
 		elementUtil = new ElementUtil(driver);
 		if (!elementUtil.waitUntillLoadedPage())
 			throw new Exception("Site stuck on loading");
