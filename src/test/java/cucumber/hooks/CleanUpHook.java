@@ -22,7 +22,7 @@ public class CleanUpHook {
 		deleteDirectoryContents(PropertiesReader.readProperty("cucumber.reports.path"));
 		deleteDirectoryContents(PropertiesReader.readProperty("cucumber.retest-reports.path"));
 		deleteDirectoryContents(PropertiesReader.readProperty("cucumber.retest-reports.path"));
-		deleteDirectoryContents("logs");
+		deleteDirectoryContents(PropertiesReader.readProperty("logs.path"));
 	}
 	
 	public static void deleteDirectoryContents(String path)

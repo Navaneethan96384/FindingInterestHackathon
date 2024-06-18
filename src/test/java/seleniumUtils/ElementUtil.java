@@ -161,7 +161,8 @@ public class ElementUtil {
 		}
 	}
 
-	public String[][] readTableRows(List<WebElement> tableRows) throws StaleElementReferenceException {
+	public String[][] readTableRows(List<WebElement> tableRows) throws StaleElementReferenceException, NullPointerException {
+		
 		ElementUtil elementUtil = new ElementUtil(driver);
 		WebElement firstRowElement = tableRows.get(0);
 		List<WebElement> firstRowCellElements = elementUtil.findAndVerifyElements(firstRowElement,

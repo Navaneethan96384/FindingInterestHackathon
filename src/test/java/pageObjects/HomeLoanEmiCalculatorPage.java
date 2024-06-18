@@ -126,13 +126,9 @@ public class HomeLoanEmiCalculatorPage {
 	}
 
 	public String[][] getYearOnYearTableData() {
-		yearOnYearTableRowElements = elementUtil.findAndVerifyElements(driver, By.xpath("//tr[contains(@class,'yearlypaymentdetails')] | //table[@class='noextras']/tbody/tr[1]"));
-		if (yearOnYearTableRowElements == null)
-			return null;
 
 		WebElement tableElement = yearOnYearTableRowElements.get(0)
 				.findElement(By.xpath("./ancestor::div[@id='paymentschedule']"));
-
 		if (!elementUtil.scrollToAndVerifyElement(tableElement, scrollableElement))
 			return null;
 
@@ -144,6 +140,9 @@ public class HomeLoanEmiCalculatorPage {
 			while (retriesLeft-- != 0) {
 				ElementUtil.sleep(500);
 				try {
+					yearOnYearTableRowElements = elementUtil.findAndVerifyElements(driver, By.xpath(
+							"//tr[contains(@class,'yearlypaymentdetails')] | //table[@class='noextras']/tbody/tr[1]"));
+
 					tableData = elementUtil.readTableRows(yearOnYearTableRowElements);
 					System.out.println("  Yearly payment details excel file created.");
 					break;
@@ -151,6 +150,10 @@ public class HomeLoanEmiCalculatorPage {
 					System.out.println("  Caught stale element exception, Retrying attempt #" + (10 - retriesLeft));
 					if (retriesLeft == 0)
 						throw staleElementReferenceException;
+				} catch (NullPointerException nullPointerException) {
+					System.out.println("  Caught null element exception, Retrying attempt #" + (10 - retriesLeft));
+					if (retriesLeft == 0)
+						throw nullPointerException;
 				}
 			}
 		} catch (StaleElementReferenceException staleElementReferenceException) {
