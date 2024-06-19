@@ -7,7 +7,7 @@ import io.cucumber.core.cli.Main;
 import io.cucumber.java.After;
 import io.cucumber.java.AfterAll;
 import io.cucumber.java.Scenario;
-import utils.Utility;
+import utils.Utilities;
 
 public class RetestHook {
 
@@ -32,9 +32,9 @@ public class RetestHook {
 			if (retryLimit.containsKey(failedScenarioTagName)) {
 				Integer retriesLeft = retryLimit.get(failedScenarioTagName);
 				if (retriesLeft == 0) {
-					Utility.enablePrintingInConsole();
+					Utilities.enablePrintingInConsole();
 					System.out.println("  Retest limit reached, Skipping scenario.");
-					Utility.disablePrintingInConsole();
+					Utilities.disablePrintingInConsole();
 					return;
 				} else {
 					retryLimit.put(failedScenarioTagName, retriesLeft - 1);
@@ -48,7 +48,7 @@ public class RetestHook {
 	}
 
 	public static void retestScenario(String failedScenarioTagName) {
-		Utility.enablePrintingInConsole();
+		Utilities.enablePrintingInConsole();
 		System.out.println("  Scenario with tag " + failedScenarioTagName + " failed, Attempting retest #"
 				+ (3 - retryLimit.get(failedScenarioTagName)));
 
@@ -62,11 +62,11 @@ public class RetestHook {
 						+ "-attempt~" + (RetestHook.MAX_RETRY_LIMIT - retryLimit.get(failedScenarioTagName)) + ".json",
 				"src/test/resources/features" };
 
-		Utility.disablePrintingInConsole();
+		Utilities.disablePrintingInConsole();
 
 		byte exitstatus = Main.run(argv, Thread.currentThread().getContextClassLoader());
 
-		Utility.enablePrintingInConsole();
+		Utilities.enablePrintingInConsole();
 		if (exitstatus == 0)
 			System.out.println("  Retest succeeded for tag " + failedScenarioTagName);
 	}

@@ -23,6 +23,7 @@ public class TestRunner {
 		try {
 			WebDriver driver = DriverFactory
 					.createDriver(PropertiesReader.readProperty("preferred-browser.name"));
+			driver.manage().window().maximize();
 			JavascriptExecutor jExecutor = (JavascriptExecutor) driver;
 
 			File reportsDirectory = new File(PropertiesReader.readProperty("cucumber.reports.path"));

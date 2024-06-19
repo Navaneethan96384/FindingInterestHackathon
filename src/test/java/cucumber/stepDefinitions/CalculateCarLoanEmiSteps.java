@@ -13,7 +13,7 @@ import io.cucumber.java.en.When;
 import pageObjects.EmiCalculatorPage;
 import utils.PropertiesReader;
 import utils.TimePeriod;
-import utils.Utility;
+import utils.Utilities;
 
 public class CalculateCarLoanEmiSteps {
 	WebDriver driver;
@@ -21,7 +21,7 @@ public class CalculateCarLoanEmiSteps {
 
 	@Given("the user is on the emi_calculator page using chrome")
 	public void the_user_is_on_the_emi_calculator_page_using_chrome() throws Exception {
-		Log4jHook.currentlyExecutingStepName = Utility.getCurrentMethodName();
+		Log4jHook.currentlyExecutingStepName = Utilities.getCurrentMethodName();
 		String browserName = "chrome";
 		driver = SeleniumDriverHook.getDriver(browserName);
 		driver.get(PropertiesReader.readProperty("emicalculator.url"));
@@ -30,7 +30,7 @@ public class CalculateCarLoanEmiSteps {
 
 	@Given("the user is on the emi_calculator page using edge")
 	public void the_user_is_on_the_emi_calculator_page_using_edge() throws Exception {
-		Log4jHook.currentlyExecutingStepName = Utility.getCurrentMethodName();
+		Log4jHook.currentlyExecutingStepName = Utilities.getCurrentMethodName();
 		String browserName = "edge";
 		driver = SeleniumDriverHook.getDriver(browserName);
 		driver.get(PropertiesReader.readProperty("emicalculator.url"));
@@ -39,37 +39,37 @@ public class CalculateCarLoanEmiSteps {
 
 	@When("the user clicks on the car_loan tab")
 	public void the_user_clicks_on_the_car_loan_tab() {
-		Log4jHook.currentlyExecutingStepName = Utility.getCurrentMethodName();
+		Log4jHook.currentlyExecutingStepName = Utilities.getCurrentMethodName();
 		assertTrue(emiCalculatorPage.clickCarLoanTab());
 	}
 
 	@When("the user enters the car loan amount {int}")
 	public void the_user_enters_the_car_loan_amount(Integer amount) {
-		Log4jHook.currentlyExecutingStepName = Utility.getCurrentMethodName();
+		Log4jHook.currentlyExecutingStepName = Utilities.getCurrentMethodName();
 		assertTrue(emiCalculatorPage.setCarLoanAmount(amount));
 	}
 
 	@When("the user enters the car loan interest {float}")
 	public void the_user_enters_the_loan_interest(Float rate) {
-		Log4jHook.currentlyExecutingStepName = Utility.getCurrentMethodName();
+		Log4jHook.currentlyExecutingStepName = Utilities.getCurrentMethodName();
 		assertTrue(emiCalculatorPage.setInterestRate(rate));
 	}
 
 	@When("the user enters the car loan tenure {int} year")
 	public void the_user_enters_the_loan_tenure_year(Integer duration) {
-		Log4jHook.currentlyExecutingStepName = Utility.getCurrentMethodName();
+		Log4jHook.currentlyExecutingStepName = Utilities.getCurrentMethodName();
 		assertTrue(emiCalculatorPage.setLoanTenure(duration, TimePeriod.YEAR));
 	}
 
 	@When("the user enters the car loan tenure {int} month")
 	public void the_user_enters_the_loan_tenure_month(Integer duration) {
-		Log4jHook.currentlyExecutingStepName = Utility.getCurrentMethodName();
+		Log4jHook.currentlyExecutingStepName = Utilities.getCurrentMethodName();
 		assertTrue(emiCalculatorPage.setLoanTenure(duration, TimePeriod.MONTH));
 	}
 
 	@Then("I verify and display the car emi details")
 	public void I_verify_and_display_the_emi_details() {
-		Log4jHook.currentlyExecutingStepName = Utility.getCurrentMethodName();
+		Log4jHook.currentlyExecutingStepName = Utilities.getCurrentMethodName();
 		String[] emiDetails = emiCalculatorPage.getEmiDetails();
 		assertTrue(emiDetails != null);
 
@@ -105,7 +105,7 @@ public class CalculateCarLoanEmiSteps {
 
 	@And("the user navigates to home_loan_calculator page")
 	public void the_user_navigates_to_home_loan_calculator_page() throws Exception {
-		Log4jHook.currentlyExecutingStepName = Utility.getCurrentMethodName();
+		Log4jHook.currentlyExecutingStepName = Utilities.getCurrentMethodName();
 		assertTrue(emiCalculatorPage.clickHomeLoanEmiCalculatorMenuItem());
 	}
 }
