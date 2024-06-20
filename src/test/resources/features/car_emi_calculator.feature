@@ -31,4 +31,4 @@ Feature: Calculate Car Loan Emi
     Examples: 
       | browser  | amount  | rate | duration  | period  |
 			| chrome   | 1500000 | 9.5  | 1         | year    |
-#			| edge     | 1500000 | 9.5  | 1         | year    |
+			| edge     | 1500000 | 9.5  | 1         | year    |
