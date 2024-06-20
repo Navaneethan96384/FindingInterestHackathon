@@ -23,6 +23,7 @@ public class Utilities {
 		System.setErr(dummyStream);
 	}
 
+	// Gets the name of the calling method from the stack trace.
 	public static String getCurrentMethodName() {
 		return Thread.currentThread().getStackTrace()[3].getMethodName();
 	}

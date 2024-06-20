@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.Duration;
 import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
@@ -102,6 +103,7 @@ public class ElementUtil {
 		return false;
 	}
 
+	// Clicks the click-able element until a new element is visible on the page.
 	public boolean clickUntilPresenceOfElementLocator(WebElement clickableElement, By locator) {
 		int timer = 0;
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(1500));
@@ -153,6 +155,7 @@ public class ElementUtil {
 		}
 	}
 
+	// Causes the current thread to sleep for specified time.
 	public static void sleep(int durationInMillis) {
 		try {
 			Thread.sleep(durationInMillis);
@@ -160,13 +163,16 @@ public class ElementUtil {
 		}
 	}
 
-	public String[][] readTableRows(List<WebElement> tableRows) throws StaleElementReferenceException, NullPointerException {
-		
+	// Produces a 2d array by reading the cell values of all the row elements.
+	public String[][] readTableRows(List<WebElement> tableRows)
+			throws StaleElementReferenceException, NullPointerException {
+
 		ElementUtil elementUtil = new ElementUtil(driver);
 		WebElement firstRowElement = tableRows.get(0);
 		List<WebElement> firstRowCellElements = elementUtil.findAndVerifyElements(firstRowElement,
 				By.xpath("./td | ./th"));
 
+		// Creating a 2d string array matching the size of table.
 		String[][] tableData = new String[tableRows.size()][firstRowCellElements.size()];
 
 		for (int i = 0; i < tableRows.size(); i++) {

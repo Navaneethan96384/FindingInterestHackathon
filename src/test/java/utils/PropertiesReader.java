@@ -7,6 +7,7 @@ import java.util.Properties;
 
 public class PropertiesReader {
 
+	// Used to read properties from mentioned properties file.
 	public static String readProperty(String key) {
 		Properties properties = new Properties();
 

@@ -101,7 +101,7 @@ public class LoanCalculatorPage {
 
 		elementUtil.highlightElement(emiCalculatorTabElement);
 		emiCalculatorTabElement.click();
-		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "clickEmiCalculatorTab"));
+		ScreenshotHook.attachScreenshot(ElementUtil.takeScreenshot(driver, browserName, "clickEmiCalculatorTab"));
 		elementUtil.undoHighlightElement(emiCalculatorTabElement);
 		return true;
 	}
@@ -112,7 +112,8 @@ public class LoanCalculatorPage {
 
 		elementUtil.highlightElement(loanAmountCalculatorTabElement);
 		loanAmountCalculatorTabElement.click();
-	 	ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "clickLoanAmountCalculatorTab"));
+		ScreenshotHook
+				.attachScreenshot(ElementUtil.takeScreenshot(driver, browserName, "clickLoanAmountCalculatorTab"));
 		elementUtil.undoHighlightElement(loanAmountCalculatorTabElement);
 		return true;
 	}
@@ -123,7 +124,8 @@ public class LoanCalculatorPage {
 
 		elementUtil.highlightElement(loanTenureCalculatorTabElement);
 		loanTenureCalculatorTabElement.click();
-		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "clickLoanTenureCalculatorTab"));
+		ScreenshotHook
+				.attachScreenshot(ElementUtil.takeScreenshot(driver, browserName, "clickLoanTenureCalculatorTab"));
 		elementUtil.undoHighlightElement(loanTenureCalculatorTabElement);
 		return true;
 	}
@@ -160,6 +162,7 @@ public class LoanCalculatorPage {
 		if (!elementUtil.verifyElement(loanTenureYearToggleElement))
 			return false;
 
+		// Clicks year or month button bases on condition.
 		if (timePeriod == TimePeriod.MONTH) {
 			elementUtil.highlightElement(loanTenureMonthToggleElement);
 			loanTenureMonthToggleElement.click();
@@ -235,17 +238,19 @@ public class LoanCalculatorPage {
 		return getSliderDetails(emiSliderElement, emiStepElements, "getEmiFromSlider");
 	}
 
+	// Sets a value in the specified input web-element.
 	public Boolean setValueOnInput(WebElement inputElement, Number value, String methodName) {
 		if (!elementUtil.scrollToAndVerifyElement(inputElement, scrollableElement))
 			return false;
 
 		elementUtil.highlightElement(inputElement);
 		inputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(value), Keys.ENTER);
-		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, methodName));
+		ScreenshotHook.attachScreenshot(ElementUtil.takeScreenshot(driver, browserName, methodName));
 		elementUtil.undoHighlightElement(inputElement);
 		return true;
 	}
 
+	// Gets a value from the specified input web-element.
 	public String getValueFromInput(WebElement inputElement) {
 		if (!elementUtil.verifyElement(inputElement))
 			return null;
@@ -256,12 +261,15 @@ public class LoanCalculatorPage {
 		return value;
 	}
 
+	// Gets the slider details such as maximum value the slider can represent,
+	// current slider position.
 	public Float[] getSliderDetails(WebElement sliderElement, List<WebElement> stepElements, String methodName) {
 		if (!elementUtil.verifyElement(sliderElement))
 			return null;
 		if (!elementUtil.verifyElement(stepElements.get(0)))
 			return null;
 
+		// Maximum value the slider can represent.
 		String sliderRightBoundString;
 		WebElement sliderRightBoundElement = stepElements.get(stepElements.size() - 1);
 
@@ -274,6 +282,7 @@ public class LoanCalculatorPage {
 			sliderRightBoundFloat *= 100000;
 		}
 
+		// Current slider percentage.
 		String slidePercentageString = sliderElement.getAttribute("style");
 		Float slidePercentage = Float.parseFloat(slidePercentageString.split("[: %]+")[1]);
 

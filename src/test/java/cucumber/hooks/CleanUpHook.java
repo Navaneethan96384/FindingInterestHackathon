@@ -6,18 +6,23 @@ import io.cucumber.java.BeforeAll;
 import utils.PropertiesReader;
 
 public class CleanUpHook {
+
+	// Method annotated with @BeforeAll to run before all scenarios
 	@BeforeAll
 	public static void cleanUp() {
 
 		File screenshotsDirectory = new File(PropertiesReader.readProperty("screenshots.path"));
 		if (screenshotsDirectory.isDirectory()) {
+			// Loop through all files in the screenshots directory and delete them
 			for (File file : screenshotsDirectory.listFiles()) {
 				if (file.isFile()) {
 					file.delete();
 				}
 			}
 		}
-		
+
+		// Delete contents of specific directories and files specified in the properties
+		// file
 		deleteDirectoryContents(PropertiesReader.readProperty("screenshots.path"));
 		deleteDirectoryContents(PropertiesReader.readProperty("cucumber.reports.path"));
 		deleteDirectoryContents(PropertiesReader.readProperty("cucumber.retest-reports.path"));
@@ -25,9 +30,9 @@ public class CleanUpHook {
 		deleteDirectoryContents(PropertiesReader.readProperty("logs.path"));
 		deleteFile(PropertiesReader.readProperty("paymentDetailsExcelFile.path"));
 	}
-	
-	public static void deleteDirectoryContents(String path)
-	{
+
+	// Method to delete contents of a directory
+	public static void deleteDirectoryContents(String path) {
 		File directory = new File(path);
 		if (directory.isDirectory()) {
 			for (File file : directory.listFiles()) {
@@ -37,9 +42,9 @@ public class CleanUpHook {
 			}
 		}
 	}
-	
-	public static void deleteFile(String path)
-	{
+
+	// Method to delete a single file
+	public static void deleteFile(String path) {
 		new File(path).delete();
 	}
 }

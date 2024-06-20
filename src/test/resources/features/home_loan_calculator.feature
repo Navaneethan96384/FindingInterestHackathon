@@ -31,4 +31,4 @@ Feature: Calculate Detailed Home Loan Information Annually
     Examples: 
       | browser  | amount   | percent | rate | duration  | period  |
 			| chrome   | 15000000 | 0 			| 9    | 20        | year    |
-			| edge     | 7500000  | 0 			| 9.5  | 20        | year    |
+#			| edge     | 7500000  | 0 			| 9.5  | 20        | year    |

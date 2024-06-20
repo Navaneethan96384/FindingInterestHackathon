@@ -18,6 +18,7 @@ public class DriverFactory {
 	// Returns driver based on specified browser.
 	public static WebDriver createDriver(String browser) {
 		if (PropertiesReader.readProperty("selenium.launch.mode").equalsIgnoreCase("remote"))
+			// For Selenium Grid (RemoteWebDriver).
 			return createRemoteDriver(browser);
 		else
 			return createWebDriver(browser);
@@ -27,6 +28,8 @@ public class DriverFactory {
 		switch (browser.toLowerCase()) {
 		case "edge":
 			EdgeOptions edgeOptions = new EdgeOptions();
+			// Makes selenium to not wait until the page loads since we are manually taking
+			// care of the page loads.
 			edgeOptions.setCapability(CapabilityType.PAGE_LOAD_STRATEGY, "none");
 			return new EdgeDriver(edgeOptions);
 

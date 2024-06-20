@@ -11,12 +11,15 @@ import utils.Utilities;
 
 public class RetestHook {
 
-	public static HashMap<String, Integer> retryLimit = new HashMap<>();
-	public static Stack<String> retestScenariosStack = new Stack<>();
+	public static HashMap<String, Integer> retryLimit = new HashMap<>(); // HashMap to store the retries left for the
+																			// particular tag name.
+	public static Stack<String> retestScenariosStack = new Stack<>(); // Stack to contain the tag names of the failed
+																		// scenarios.
 	public static final int MAX_RETRY_LIMIT = 3;
 
+	// Method to add the tag name of a scenario to the stack if it fails.
 	@After
-	public void retryIfScenarioFails(Scenario scenario) {
+	public void addFailedScenarioTagNameToStack(Scenario scenario) {
 		if (scenario.isFailed()) {
 			String scenarioTagName = scenario.getSourceTagNames().toArray(new String[0])[0];
 			if (!retestScenariosStack.contains(scenarioTagName))
@@ -24,8 +27,12 @@ public class RetestHook {
 		}
 	}
 
+	// Method executes at-last after execution of all the scenarios.
 	@AfterAll
-	public static void run() {
+	public static void startRetest() {
+		// Logic to start the re-test of the failed scenarios until the stack containing
+		// failed scenario tag names is empty or retry limit for a specific scenario tag
+		// name is reached.
 		while (!retestScenariosStack.isEmpty()) {
 			String failedScenarioTagName = retestScenariosStack.pop();
 
@@ -47,6 +54,8 @@ public class RetestHook {
 		}
 	}
 
+	// Method to re-test the failed scenarios by programmatically re-running the
+	// scenarios with the cucumber CLI.
 	public static void retestScenario(String failedScenarioTagName) {
 		Utilities.enablePrintingInConsole();
 		System.out.println("  Scenario with tag " + failedScenarioTagName + " failed, Attempting retest #"
@@ -62,9 +71,14 @@ public class RetestHook {
 						+ "-attempt~" + (RetestHook.MAX_RETRY_LIMIT - retryLimit.get(failedScenarioTagName)) + ".json",
 				"src/test/resources/features" };
 
-		Utilities.disablePrintingInConsole();
+		Utilities.disablePrintingInConsole(); // Disable printing in console to promote console readability by avoiding
+												// unwanted details.
 
-		byte exitstatus = Main.run(argv, Thread.currentThread().getContextClassLoader());
+		byte exitstatus = Main.run(argv, Thread.currentThread().getContextClassLoader()); // Cucumber CLI to
+																							// programmatically run the
+																							// scenarios with the
+																							// mentioned tags (tags of
+																							// the failed scenarios).
 
 		Utilities.enablePrintingInConsole();
 		if (exitstatus == 0)

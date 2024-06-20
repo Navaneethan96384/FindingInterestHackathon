@@ -20,7 +20,7 @@ public class PerformUITestsOnLoanCalculatorSteps {
 
 	@Given("the user is on the loan_calculator page using chrome")
 	public void the_user_is_on_the_loan_calculator_page_using_chrome() throws Exception {
-		Log4jHook.log();
+		Log4jHook.log(); // Enables logging.
 		String browserName = "chrome";
 		driver = SeleniumDriverHook.getDriver(browserName);
 		driver.get(PropertiesReader.readProperty("loancalculator.url"));
@@ -226,13 +226,19 @@ public class PerformUITestsOnLoanCalculatorSteps {
 		validateUI(loanCalculatorPage.getLoanFeesFromSlider(), loanCalculatorPage.getLoanFeesFromInput());
 	}
 
+	// Logic to check whether the value on the slider element matches with the value
+	// on the input element.
 	private void validateUI(Float[] sliderDetails, Number valueOnInputElement) throws AssertionError {
-		Float rightBound = sliderDetails[0];
-		Float sliderPosition = sliderDetails[1];
+		Float rightBound = sliderDetails[0]; // Maximum value the slider can represent.
+		Float sliderPosition = sliderDetails[1]; // Represents the position of the slider, for example, if right-bound
+													// is 200 and slider position is 50(%) then it represents that the
+													// value on the input element is 100.
 
-		Float calculatedVal = ((valueOnInputElement.floatValue() / rightBound) * 100f);
+		Float calculatedVal = ((valueOnInputElement.floatValue() / rightBound) * 100f); // Calculated slider position.
 		calculatedVal = calculatedVal > 100f ? 100f : calculatedVal;
-		Float difference = Math.abs(calculatedVal - sliderPosition);
+
+		Float difference = Math.abs(calculatedVal - sliderPosition); // difference between the calculated slider
+																		// position and the actual slider position.
 
 		Float deviationPercentage;
 		if (sliderPosition != 0)
@@ -240,6 +246,8 @@ public class PerformUITestsOnLoanCalculatorSteps {
 		else
 			deviationPercentage = 0f;
 
+		// Throws an exception if the difference between the calculated slider position
+		// and the actual slider position is significant enough.
 		assertTrue(deviationPercentage < 1);
 	}
 }

@@ -50,10 +50,10 @@ public class HomeLoanEmiCalculatorPage {
 
 	@FindBy(tagName = "html")
 	private WebElement scrollableElement;
-	
+
 	@FindBy(xpath = "//tr[contains(@class,'yearlypaymentdetails')][1]/td[1]/following::tr[1]//tr[1]/td[2]")
 	private WebElement firstMonthPrincipalElement;
-	
+
 	@FindBy(xpath = "//tr[contains(@class,'yearlypaymentdetails')][1]/td[1]/following::tr[1]//tr[1]/td[3]")
 	private WebElement firstMonthInterestElement;
 
@@ -81,7 +81,7 @@ public class HomeLoanEmiCalculatorPage {
 
 		elementUtil.highlightElement(homeValueInputElement);
 		homeValueInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(amount), Keys.ENTER);
-		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "setHomeValue"));
+		ScreenshotHook.attachScreenshot(ElementUtil.takeScreenshot(driver, browserName, "setHomeValue"));
 		elementUtil.undoHighlightElement(homeValueInputElement);
 		return true;
 	}
@@ -92,7 +92,7 @@ public class HomeLoanEmiCalculatorPage {
 
 		elementUtil.highlightElement(downPaymentInputElement);
 		downPaymentInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(percent), Keys.ENTER);
-		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "setDownPaymentPercentage"));
+		ScreenshotHook.attachScreenshot(ElementUtil.takeScreenshot(driver, browserName, "setDownPaymentPercentage"));
 		elementUtil.undoHighlightElement(downPaymentInputElement);
 		return true;
 	}
@@ -103,7 +103,7 @@ public class HomeLoanEmiCalculatorPage {
 
 		elementUtil.highlightElement(interestRateInputElement);
 		interestRateInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(rate), Keys.ENTER);
-		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "setHomeLoanInterestRate"));
+		ScreenshotHook.attachScreenshot(ElementUtil.takeScreenshot(driver, browserName, "setHomeLoanInterestRate"));
 		elementUtil.undoHighlightElement(interestRateInputElement);
 		return true;
 	}
@@ -116,6 +116,7 @@ public class HomeLoanEmiCalculatorPage {
 		if (!elementUtil.verifyElement(loanTenureYearToggleElement))
 			return false;
 
+		// Clicks year or month button based on condition.
 		if (timePeriod == TimePeriod.MONTH) {
 			elementUtil.highlightElement(loanTenureMonthToggleElement);
 			loanTenureMonthToggleElement.click();
@@ -128,11 +129,12 @@ public class HomeLoanEmiCalculatorPage {
 
 		elementUtil.highlightElement(loanTenureInputElement);
 		loanTenureInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(duration), Keys.ENTER);
-		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "setHomeLoanTenure"));
+		ScreenshotHook.attachScreenshot(ElementUtil.takeScreenshot(driver, browserName, "setHomeLoanTenure"));
 		elementUtil.undoHighlightElement(loanTenureInputElement);
 		return true;
 	}
 
+	// Method to get the year to year payment details from the table.
 	public String[][] getYearOnYearTableData() {
 
 		WebElement tableElement = yearOnYearTableRowElements.get(0)
@@ -144,13 +146,17 @@ public class HomeLoanEmiCalculatorPage {
 		String tableData[][] = null;
 		elementUtil.highlightElement(tableElement);
 
+		// Logic to get the table values with retry mechanism if in-case of table or few
+		// rows are still getting updated in DOM.
 		try {
 			while (retriesLeft-- != 0) {
 				ElementUtil.sleep(500);
 				try {
+					// Elements representing each row of the table.
 					yearOnYearTableRowElements = elementUtil.findAndVerifyElements(driver, By.xpath(
 							"//tr[contains(@class,'yearlypaymentdetails')] | //table[@class='noextras']/tbody/tr[1]"));
 
+					// Getting 2d string array by reading cell data from rows.
 					tableData = elementUtil.readTableRows(yearOnYearTableRowElements);
 					System.out.println("  Yearly payment details excel file created.");
 					break;
@@ -168,7 +174,7 @@ public class HomeLoanEmiCalculatorPage {
 			throw staleElementReferenceException;
 		}
 
-		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "getYearOnYearTableData"));
+		ScreenshotHook.attachScreenshot(ElementUtil.takeScreenshot(driver, browserName, "getYearOnYearTableData"));
 		elementUtil.undoHighlightElement(tableElement);
 		return tableData;
 	}
@@ -191,7 +197,7 @@ public class HomeLoanEmiCalculatorPage {
 		if (!clicked)
 			return false;
 		elementUtil.highlightElement(loanCalculatorMenuItemElement);
-		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "clickLoanCalculator"));
+		ScreenshotHook.attachScreenshot(ElementUtil.takeScreenshot(driver, browserName, "clickLoanCalculator"));
 		if (!loanCalculatorMenuItemElement.getAttribute("href")
 				.equalsIgnoreCase(PropertiesReader.readProperty("loancalculator.url")))
 			throw new Exception("Wrong url exception");

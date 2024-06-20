@@ -41,15 +41,15 @@ public class EmiCalculatorPage {
 
 	@FindBy(xpath = "//div[@id='emitotalamount']//span")
 	private WebElement emiTotalAmountElement;
-	
+
 	@FindBy(xpath = "//tr[contains(@class,'yearlypaymentdetails')][1]/td[1]")
 	private WebElement firstYearElement;
 
 	@FindBy(xpath = "//tr[contains(@class,'yearlypaymentdetails')][1]/td[1]/following::tr[1]//tr[1]/td[2]")
-    private WebElement firstMonthPrincipalElement;
-	
+	private WebElement firstMonthPrincipalElement;
+
 	@FindBy(xpath = "//tr[contains(@class,'yearlypaymentdetails')][1]/td[1]/following::tr[1]//tr[1]/td[3]")
-    private WebElement firstMonthInterestElement;
+	private WebElement firstMonthInterestElement;
 
 	@FindBy(xpath = "//button[@class='navbar-toggler']")
 	private WebElement navBarTogglerElement;
@@ -62,7 +62,7 @@ public class EmiCalculatorPage {
 
 	@FindBy(tagName = "html")
 	private WebElement scrollableElement;
-	
+
 	private WebDriver driver;
 	private String browserName;
 	private ElementUtil elementUtil;
@@ -86,7 +86,7 @@ public class EmiCalculatorPage {
 			return false;
 
 		elementUtil.highlightElement(carLoanTabElement);
-		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "clickCarLoanTab"));
+		ScreenshotHook.attachScreenshot(ElementUtil.takeScreenshot(driver, browserName, "clickCarLoanTab"));
 		carLoanTabElement.click();
 		elementUtil.undoHighlightElement(carLoanTabElement);
 		return true;
@@ -98,7 +98,7 @@ public class EmiCalculatorPage {
 
 		elementUtil.highlightElement(loanAmountInputElement);
 		loanAmountInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(amount), Keys.ENTER);
-		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "setCarLoanAmount"));
+		ScreenshotHook.attachScreenshot(ElementUtil.takeScreenshot(driver, browserName, "setCarLoanAmount"));
 		elementUtil.undoHighlightElement(loanAmountInputElement);
 
 		return true;
@@ -114,7 +114,7 @@ public class EmiCalculatorPage {
 
 		elementUtil.highlightElement(loanInterestInputElement);
 		loanInterestInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(rate), Keys.ENTER);
-		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "setCarLoanInterestRate"));
+		ScreenshotHook.attachScreenshot(ElementUtil.takeScreenshot(driver, browserName, "setCarLoanInterestRate"));
 		elementUtil.undoHighlightElement(loanInterestInputElement);
 		return true;
 	}
@@ -143,7 +143,7 @@ public class EmiCalculatorPage {
 
 		elementUtil.highlightElement(loanTenureInputElement);
 		loanTenureInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(duration), Keys.ENTER);
-		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "setCarLoanTenure"));
+		ScreenshotHook.attachScreenshot(ElementUtil.takeScreenshot(driver, browserName, "setCarLoanTenure"));
 		elementUtil.undoHighlightElement(loanTenureInputElement);
 		return true;
 	}
@@ -164,6 +164,7 @@ public class EmiCalculatorPage {
 		return valueOnInputElement;
 	}
 
+	// Method to get various details of the loan.
 	public String[] getEmiDetails() {
 		if (!elementUtil.scrollToAndVerifyElement(emiAmountElement, scrollableElement))
 			return null;
@@ -175,30 +176,32 @@ public class EmiCalculatorPage {
 		elementUtil.highlightElement(emiAmountElement);
 		elementUtil.highlightElement(emiTotalInterestElement);
 		elementUtil.highlightElement(emiTotalAmountElement);
-		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "getEmiDetails"));
+		ScreenshotHook.attachScreenshot(ElementUtil.takeScreenshot(driver, browserName, "getEmiDetails"));
 		elementUtil.undoHighlightElement(emiAmountElement);
 		elementUtil.undoHighlightElement(emiTotalInterestElement);
 		elementUtil.undoHighlightElement(emiTotalAmountElement);
-		
+
 		if (!elementUtil.scrollToAndVerifyElement(firstYearElement, scrollableElement))
 			return null;
-		
+
 		elementUtil.highlightElement(firstYearElement);
 		boolean clicked = elementUtil.clickUntilPresenceOfElement(firstYearElement, firstMonthPrincipalElement);
 		elementUtil.undoHighlightElement(firstYearElement);
-		if(!clicked) return null;
-		
-		if(!elementUtil.verifyElement(firstMonthPrincipalElement))
+		if (!clicked)
 			return null;
-		if(!elementUtil.verifyElement(firstMonthInterestElement))
+
+		if (!elementUtil.verifyElement(firstMonthPrincipalElement))
 			return null;
-		
-		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "getFirstMonthEmiDetails"));;
-		
+		if (!elementUtil.verifyElement(firstMonthInterestElement))
+			return null;
+
+		ScreenshotHook.attachScreenshot(ElementUtil.takeScreenshot(driver, browserName, "getFirstMonthEmiDetails"));
+		;
+
 		String[] emiData = { emiAmountElement.getText(), emiTotalInterestElement.getText(),
 				emiTotalAmountElement.getText(), firstMonthInterestElement.getText(),
 				firstMonthPrincipalElement.getText() };
-		
+
 		return emiData;
 	}
 
@@ -221,7 +224,7 @@ public class EmiCalculatorPage {
 		if (!clicked)
 			return false;
 		elementUtil.highlightElement(homeLoanEmiCalculatorMenuItemElement);
-		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "clickHomeLoanEmiCalculator"));
+		ScreenshotHook.attachScreenshot(ElementUtil.takeScreenshot(driver, browserName, "clickHomeLoanEmiCalculator"));
 		if (!homeLoanEmiCalculatorMenuItemElement.getAttribute("href")
 				.equalsIgnoreCase(PropertiesReader.readProperty("homeloanemicalculator.url")))
 			throw new Exception("Wrong url exception");

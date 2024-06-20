@@ -22,7 +22,7 @@ public class CalculateHomeLoanEmiSteps {
 
 	@Given("the user is on the home_loan_calculator page using chrome")
 	public void the_user_is_on_the_home_loan_calculator_page_using_chrome() throws Exception {
-		Log4jHook.log();
+		Log4jHook.log(); // Enables logging.
 		String browserName = "chrome";
 		driver = SeleniumDriverHook.getDriver(browserName);
 		driver.get(PropertiesReader.readProperty("homeloanemicalculator.url"));
@@ -71,9 +71,12 @@ public class CalculateHomeLoanEmiSteps {
 	@Then("I verify and store the generated year_on_year loan details in an excel format")
 	public void I_store_the_generated_year_on_year_loan_details_in_an_excel_format() {
 		Log4jHook.log();
+
+		// Getting all value from all cells of the table and storing it in a 2d array.
 		String[][] yearOnYearPaymentDetails = homeLoanEmiCalculatorPage.getYearOnYearTableData();
 		assertTrue(yearOnYearPaymentDetails != null);
 
+		// Logic to store it in an excel file.
 		ExcelUtil excelUtil = new ExcelUtil();
 		excelUtil.create(PropertiesReader.readProperty("paymentDetailsExcelFile.path"), "yearOnYearPayment",
 				yearOnYearPaymentDetails);

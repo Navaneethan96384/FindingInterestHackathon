@@ -20,7 +20,7 @@ public class CalculateCarLoanEmiSteps {
 
 	@Given("the user is on the emi_calculator page using chrome")
 	public void the_user_is_on_the_emi_calculator_page_using_chrome() throws Exception {
-		Log4jHook.log();
+		Log4jHook.log(); // Enables logging.
 		String browserName = "chrome";
 		driver = SeleniumDriverHook.getDriver(browserName);
 		driver.get(PropertiesReader.readProperty("emicalculator.url"));
@@ -66,6 +66,7 @@ public class CalculateCarLoanEmiSteps {
 		assertTrue(emiCalculatorPage.setLoanTenure(duration, TimePeriod.MONTH));
 	}
 
+	// Method gets the EMI details and validates it with calculated values.
 	@Then("I verify and display the car emi details")
 	public void I_verify_and_display_the_emi_details() {
 		Log4jHook.log();
@@ -85,6 +86,7 @@ public class CalculateCarLoanEmiSteps {
 						/ (Math.pow(1 + monthlyInterestRate, loanTenureInMonths) - 1)));
 
 		Integer difference = Math.abs(monthlyEmiAmount - calculatedMonthlyEmiAmount);
+
 		Integer deviationPercentage = (difference / monthlyEmiAmount) * 100;
 
 		System.out.println();
@@ -95,6 +97,8 @@ public class CalculateCarLoanEmiSteps {
 		System.out.println("  First Month Interest Amount: " + emiDetails[3]);
 		System.out.println("  First Month Principal Amount: " + emiDetails[4]);
 
+		// Throws an exception if the difference between the calculated EMI amount and
+		// EMI amount from emi-calculator is significant enough.
 		assertTrue(deviationPercentage < 1);
 		System.out.println();
 		System.out.println("  Calculated Monthly EMI Amount: " + calculatedMonthlyEmiAmount);
