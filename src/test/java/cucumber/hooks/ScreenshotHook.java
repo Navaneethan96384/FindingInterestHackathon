@@ -1,30 +1,28 @@
 package cucumber.hooks;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 
-import io.cucumber.java.AfterStep;
 import io.cucumber.java.BeforeStep;
 import io.cucumber.java.Scenario;
 
 public class ScreenshotHook {
-	public static Path mostRecentScreenshotTakenPath;
+	
+	private static Scenario scenario;
 
 	@BeforeStep
-	public void beforeStep() {
-		mostRecentScreenshotTakenPath = null;
+	public void beforeStep(Scenario scenario) {
+		ScreenshotHook.scenario = scenario;
 	}
 
-	@AfterStep
-	public void afterStep(Scenario scenario) {
-		if (mostRecentScreenshotTakenPath == null)
-			return;
-
+	public static void attachScreenShot(String screenShotPath) {
 		try {
-			byte[] fileBytes = Files.readAllBytes(mostRecentScreenshotTakenPath);
-			scenario.attach(fileBytes, "image/png", mostRecentScreenshotTakenPath.getFileName().toString());
+			File screenShotFile = new File(screenShotPath);
+			byte[] fileBytes = Files.readAllBytes(screenShotFile.toPath());
+			scenario.attach(fileBytes, "image/png", screenShotFile.getName().toString());
 		} catch (IOException ignored) {
+			ignored.printStackTrace();
 		}
 	}
 }

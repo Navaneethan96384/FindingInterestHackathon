@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import cucumber.hooks.ScreenshotHook;
 import seleniumUtils.ElementUtil;
 import utils.TimePeriod;
 
@@ -100,7 +101,7 @@ public class LoanCalculatorPage {
 
 		elementUtil.highlightElement(emiCalculatorTabElement);
 		emiCalculatorTabElement.click();
-		ElementUtil.takeScreenshot(driver, browserName, "clickEmiCalculatorTab");
+		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "clickEmiCalculatorTab"));
 		elementUtil.undoHighlightElement(emiCalculatorTabElement);
 		return true;
 	}
@@ -111,7 +112,7 @@ public class LoanCalculatorPage {
 
 		elementUtil.highlightElement(loanAmountCalculatorTabElement);
 		loanAmountCalculatorTabElement.click();
-		ElementUtil.takeScreenshot(driver, browserName, "clickLoanAmountCalculatorTab");
+	 	ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "clickLoanAmountCalculatorTab"));
 		elementUtil.undoHighlightElement(loanAmountCalculatorTabElement);
 		return true;
 	}
@@ -122,7 +123,7 @@ public class LoanCalculatorPage {
 
 		elementUtil.highlightElement(loanTenureCalculatorTabElement);
 		loanTenureCalculatorTabElement.click();
-		ElementUtil.takeScreenshot(driver, browserName, "clickLoanTenureCalculatorTab");
+		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "clickLoanTenureCalculatorTab"));
 		elementUtil.undoHighlightElement(loanTenureCalculatorTabElement);
 		return true;
 	}
@@ -240,7 +241,7 @@ public class LoanCalculatorPage {
 
 		elementUtil.highlightElement(inputElement);
 		inputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(value), Keys.ENTER);
-		ElementUtil.takeScreenshot(driver, browserName, methodName);
+		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, methodName));
 		elementUtil.undoHighlightElement(inputElement);
 		return true;
 	}
@@ -261,27 +262,21 @@ public class LoanCalculatorPage {
 		if (!elementUtil.verifyElement(stepElements.get(0)))
 			return null;
 
-		String sliderLeftBoundString, sliderRightBoundString;
-		WebElement sliderLeftBoundElement = stepElements.get(0),
-				sliderRightBoundElement = stepElements.get(stepElements.size() - 1);
+		String sliderRightBoundString;
+		WebElement sliderRightBoundElement = stepElements.get(stepElements.size() - 1);
 
-		elementUtil.highlightElement(sliderLeftBoundElement);
 		elementUtil.highlightElement(sliderRightBoundElement);
-		sliderLeftBoundString = sliderLeftBoundElement.getText().trim();
 		sliderRightBoundString = sliderRightBoundElement.getText().trim();
-		elementUtil.undoHighlightElement(sliderLeftBoundElement);
 		elementUtil.undoHighlightElement(sliderRightBoundElement);
 
-		Float[] sliderBoundsFloats = { Float.parseFloat(sliderLeftBoundString.split("L")[0]),
-				Float.parseFloat(sliderRightBoundString.split("L")[0]) };
+		Float sliderRightBoundFloat = Float.parseFloat(sliderRightBoundString.split("L")[0]);
 		if (sliderRightBoundString.contains("L")) {
-			sliderBoundsFloats[0] *= 100000;
-			sliderBoundsFloats[1] *= 100000;
+			sliderRightBoundFloat *= 100000;
 		}
 
 		String slidePercentageString = sliderElement.getAttribute("style");
 		Float slidePercentage = Float.parseFloat(slidePercentageString.split("[: %]+")[1]);
 
-		return new Float[] { sliderBoundsFloats[0], sliderBoundsFloats[1], slidePercentage };
+		return new Float[] { sliderRightBoundFloat, slidePercentage };
 	}
 }

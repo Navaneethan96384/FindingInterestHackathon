@@ -12,6 +12,7 @@ import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import cucumber.hooks.ScreenshotHook;
 import seleniumUtils.ElementUtil;
 import utils.PropertiesReader;
 import utils.TimePeriod;
@@ -49,6 +50,12 @@ public class HomeLoanEmiCalculatorPage {
 
 	@FindBy(tagName = "html")
 	private WebElement scrollableElement;
+	
+	@FindBy(xpath = "//tr[contains(@class,'yearlypaymentdetails')][1]/td[1]/following::tr[1]//tr[1]/td[2]")
+	private WebElement firstMonthPrincipalElement;
+	
+	@FindBy(xpath = "//tr[contains(@class,'yearlypaymentdetails')][1]/td[1]/following::tr[1]//tr[1]/td[3]")
+	private WebElement firstMonthInterestElement;
 
 	private WebDriver driver;
 	private String browserName;
@@ -74,7 +81,7 @@ public class HomeLoanEmiCalculatorPage {
 
 		elementUtil.highlightElement(homeValueInputElement);
 		homeValueInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(amount), Keys.ENTER);
-		ElementUtil.takeScreenshot(driver, browserName, "setHomeValue");
+		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "setHomeValue"));
 		elementUtil.undoHighlightElement(homeValueInputElement);
 		return true;
 	}
@@ -85,7 +92,7 @@ public class HomeLoanEmiCalculatorPage {
 
 		elementUtil.highlightElement(downPaymentInputElement);
 		downPaymentInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(percent), Keys.ENTER);
-		ElementUtil.takeScreenshot(driver, browserName, "setDownPaymentPercentage");
+		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "setDownPaymentPercentage"));
 		elementUtil.undoHighlightElement(downPaymentInputElement);
 		return true;
 	}
@@ -96,7 +103,7 @@ public class HomeLoanEmiCalculatorPage {
 
 		elementUtil.highlightElement(interestRateInputElement);
 		interestRateInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(rate), Keys.ENTER);
-		ElementUtil.takeScreenshot(driver, browserName, "setHomeLoanInterestRate");
+		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "setHomeLoanInterestRate"));
 		elementUtil.undoHighlightElement(interestRateInputElement);
 		return true;
 	}
@@ -121,7 +128,7 @@ public class HomeLoanEmiCalculatorPage {
 
 		elementUtil.highlightElement(loanTenureInputElement);
 		loanTenureInputElement.sendKeys(Keys.chord(Keys.CONTROL, "a"), String.valueOf(duration), Keys.ENTER);
-		ElementUtil.takeScreenshot(driver, browserName, "setHomeLoanTenure");
+		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "setHomeLoanTenure"));
 		elementUtil.undoHighlightElement(loanTenureInputElement);
 		return true;
 	}
@@ -161,7 +168,7 @@ public class HomeLoanEmiCalculatorPage {
 			throw staleElementReferenceException;
 		}
 
-		ElementUtil.takeScreenshot(driver, browserName, "getYearOnYearTableData");
+		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "getYearOnYearTableData"));
 		elementUtil.undoHighlightElement(tableElement);
 		return tableData;
 	}
@@ -184,7 +191,7 @@ public class HomeLoanEmiCalculatorPage {
 		if (!clicked)
 			return false;
 		elementUtil.highlightElement(loanCalculatorMenuItemElement);
-		ElementUtil.takeScreenshot(driver, browserName, "clickLoanCalculator");
+		ScreenshotHook.attachScreenShot(ElementUtil.takeScreenshot(driver, browserName, "clickLoanCalculator"));
 		if (!loanCalculatorMenuItemElement.getAttribute("href")
 				.equalsIgnoreCase(PropertiesReader.readProperty("loancalculator.url")))
 			throw new Exception("Wrong url exception");

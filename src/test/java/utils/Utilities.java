@@ -24,6 +24,6 @@ public class Utilities {
 	}
 
 	public static String getCurrentMethodName() {
-		return Thread.currentThread().getStackTrace()[2].getMethodName();
+		return Thread.currentThread().getStackTrace()[3].getMethodName();
 	}
 }

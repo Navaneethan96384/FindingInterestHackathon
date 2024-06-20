@@ -18,7 +18,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import cucumber.hooks.ScreenshotHook;
 import utils.PropertiesReader;
 
 public class ElementUtil {
@@ -47,9 +46,9 @@ public class ElementUtil {
 	}
 
 	// Wait & verify an element.
-	public boolean verifyElement(WebElement element, Duration... duration) {
+	public boolean verifyElement(WebElement element, Duration... timeOut) {
 		waitUntillLoadedPage();
-		WebDriverWait wait = new WebDriverWait(driver, duration.length == 0 ? Duration.ofSeconds(10) : duration[0]);
+		WebDriverWait wait = new WebDriverWait(driver, timeOut.length == 0 ? Duration.ofSeconds(10) : timeOut[0]);
 		try {
 			wait.until(ExpectedConditions.visibilityOf(element));
 			return true;
@@ -205,7 +204,6 @@ public class ElementUtil {
 			e.printStackTrace();
 		}
 
-		ScreenshotHook.mostRecentScreenshotTakenPath = screenshotSavePath;
 		return screenshotSavePath.toString();
 	}
 }
