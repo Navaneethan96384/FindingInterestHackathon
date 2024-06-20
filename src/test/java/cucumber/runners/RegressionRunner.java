@@ -22,9 +22,10 @@ public class RegressionRunner {
 	// scenarios.
 	@AfterClass
 	public static void openHTMLReports() {
+
 		if (PropertiesReader.readProperty("selenium.launch.mode").equalsIgnoreCase("local"))
 			try {
-				WebDriver driver = DriverFactory.createDriver(PropertiesReader.readProperty("preferred-browser.name"));
+				WebDriver driver = DriverFactory.createDriver("chrome");
 				driver.manage().window().maximize();
 				JavascriptExecutor jExecutor = (JavascriptExecutor) driver;
 

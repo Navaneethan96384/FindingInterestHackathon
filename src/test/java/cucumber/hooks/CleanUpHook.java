@@ -11,21 +11,10 @@ public class CleanUpHook {
 	@BeforeAll
 	public static void cleanUp() {
 
-		File screenshotsDirectory = new File(PropertiesReader.readProperty("screenshots.path"));
-		if (screenshotsDirectory.isDirectory()) {
-			// Loop through all files in the screenshots directory and delete them
-			for (File file : screenshotsDirectory.listFiles()) {
-				if (file.isFile()) {
-					file.delete();
-				}
-			}
-		}
-
 		// Delete contents of specific directories and files specified in the properties
 		// file
 		deleteDirectoryContents(PropertiesReader.readProperty("screenshots.path"));
 		deleteDirectoryContents(PropertiesReader.readProperty("cucumber.reports.path"));
-		deleteDirectoryContents(PropertiesReader.readProperty("cucumber.retest-reports.path"));
 		deleteDirectoryContents(PropertiesReader.readProperty("cucumber.retest-reports.path"));
 		deleteDirectoryContents(PropertiesReader.readProperty("logs.path"));
 		deleteFile(PropertiesReader.readProperty("paymentDetailsExcelFile.path"));
